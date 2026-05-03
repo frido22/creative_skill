@@ -1,0 +1,153 @@
+{
+  "by_category": {
+    "agent_workflow": {
+      "average_feasibility_delta": -0.2,
+      "average_originality_delta": 1.6,
+      "average_simplicity_delta": 0.0,
+      "average_specificity_delta": 1.0,
+      "average_usefulness_delta": 0.8,
+      "creative_feasibility_loss_rate": 0.2,
+      "creative_originality_win_rate": 0.8,
+      "creative_overall_win_rate": 0.8,
+      "creative_overcomplication_rate": 0.2,
+      "creative_usefulness_win_rate": 0.8,
+      "creative_valid_win_rate": 0.6,
+      "tie_rate": 0.2
+    },
+    "code_architecture": {
+      "average_feasibility_delta": -0.2,
+      "average_originality_delta": 1.6,
+      "average_simplicity_delta": 0.0,
+      "average_specificity_delta": 1.0,
+      "average_usefulness_delta": 0.8,
+      "creative_feasibility_loss_rate": 0.2,
+      "creative_originality_win_rate": 0.8,
+      "creative_overall_win_rate": 1.0,
+      "creative_overcomplication_rate": 0.2,
+      "creative_usefulness_win_rate": 0.8,
+      "creative_valid_win_rate": 0.8,
+      "tie_rate": 0.0
+    },
+    "debugging": {
+      "average_feasibility_delta": 0.0,
+      "average_originality_delta": 2.0,
+      "average_simplicity_delta": -0.2,
+      "average_specificity_delta": 1.0,
+      "average_usefulness_delta": 0.8,
+      "creative_feasibility_loss_rate": 0.0,
+      "creative_originality_win_rate": 1.0,
+      "creative_overall_win_rate": 0.8,
+      "creative_overcomplication_rate": 0.0,
+      "creative_usefulness_win_rate": 0.8,
+      "creative_valid_win_rate": 0.8,
+      "tie_rate": 0.0
+    },
+    "design": {
+      "average_feasibility_delta": -0.2,
+      "average_originality_delta": 1.6,
+      "average_simplicity_delta": -0.2,
+      "average_specificity_delta": 1.0,
+      "average_usefulness_delta": 1.0,
+      "creative_feasibility_loss_rate": 0.2,
+      "creative_originality_win_rate": 0.8,
+      "creative_overall_win_rate": 0.8,
+      "creative_overcomplication_rate": 0.2,
+      "creative_usefulness_win_rate": 1.0,
+      "creative_valid_win_rate": 0.6,
+      "tie_rate": 0.2
+    },
+    "naming": {
+      "average_feasibility_delta": 0.0,
+      "average_originality_delta": 2.0,
+      "average_simplicity_delta": 0.0,
+      "average_specificity_delta": 1.0,
+      "average_usefulness_delta": 1.0,
+      "creative_feasibility_loss_rate": 0.0,
+      "creative_originality_win_rate": 1.0,
+      "creative_overall_win_rate": 1.0,
+      "creative_overcomplication_rate": 0.0,
+      "creative_usefulness_win_rate": 1.0,
+      "creative_valid_win_rate": 1.0,
+      "tie_rate": 0.0
+    },
+    "product_strategy": {
+      "average_feasibility_delta": 0.0,
+      "average_originality_delta": 2.0,
+      "average_simplicity_delta": -0.2,
+      "average_specificity_delta": 1.0,
+      "average_usefulness_delta": 1.0,
+      "creative_feasibility_loss_rate": 0.0,
+      "creative_originality_win_rate": 1.0,
+      "creative_overall_win_rate": 0.6,
+      "creative_overcomplication_rate": 0.0,
+      "creative_usefulness_win_rate": 1.0,
+      "creative_valid_win_rate": 0.6,
+      "tie_rate": 0.2
+    },
+    "research_framing": {
+      "average_feasibility_delta": 0.0,
+      "average_originality_delta": 2.0,
+      "average_simplicity_delta": -0.2,
+      "average_specificity_delta": 1.0,
+      "average_usefulness_delta": 0.8,
+      "creative_feasibility_loss_rate": 0.0,
+      "creative_originality_win_rate": 1.0,
+      "creative_overall_win_rate": 0.8,
+      "creative_overcomplication_rate": 0.0,
+      "creative_usefulness_win_rate": 0.8,
+      "creative_valid_win_rate": 0.8,
+      "tie_rate": 0.0
+    },
+    "writing": {
+      "average_feasibility_delta": -0.2,
+      "average_originality_delta": 1.6,
+      "average_simplicity_delta": -0.2,
+      "average_specificity_delta": 1.0,
+      "average_usefulness_delta": 0.8,
+      "creative_feasibility_loss_rate": 0.2,
+      "creative_originality_win_rate": 0.8,
+      "creative_overall_win_rate": 1.0,
+      "creative_overcomplication_rate": 0.2,
+      "creative_usefulness_win_rate": 0.8,
+      "creative_valid_win_rate": 0.8,
+      "tie_rate": 0.0
+    }
+  },
+  "dry_run": true,
+  "gen_model": "gpt-5.4",
+  "judge_model": "gpt-5.5",
+  "metrics": {
+    "average_feasibility_delta": -0.1,
+    "average_originality_delta": 1.8,
+    "average_simplicity_delta": -0.125,
+    "average_specificity_delta": 1.0,
+    "average_usefulness_delta": 0.875,
+    "creative_feasibility_loss_rate": 0.1,
+    "creative_originality_win_rate": 0.9,
+    "creative_overall_win_rate": 0.85,
+    "creative_overcomplication_rate": 0.1,
+    "creative_usefulness_win_rate": 0.875,
+    "creative_valid_win_rate": 0.75,
+    "tie_rate": 0.075
+  },
+  "pass": true,
+  "task_count": 40,
+  "thresholds": {
+    "creative_feasibility_loss_rate": [
+      "<=",
+      0.15
+    ],
+    "creative_originality_win_rate": [
+      ">=",
+      0.7
+    ],
+    "creative_overcomplication_rate": [
+      "<=",
+      0.2
+    ],
+    "creative_valid_win_rate": [
+      ">=",
+      0.6
+    ]
+  }
+}

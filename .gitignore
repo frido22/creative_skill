@@ -1,0 +1,15 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+results/baseline.jsonl
+results/creative.jsonl
+results/pairs.jsonl
+results/judgments.jsonl
+results/summary.json
+results/report.md
