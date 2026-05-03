@@ -1,6 +1,8 @@
 # Creative Benchmark Report
 
-Creative result: PASS.
+Creative dry-run example result: PASS.
+
+This dry-run report uses deterministic fake answers and fake judgments. It verifies the benchmark pipeline, not the real effectiveness of Creative.
 
 Creative is compared against a normal baseline answer. The benchmark rewards answers that are more useful, original, feasible, specific, and simple.
 

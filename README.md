@@ -2,11 +2,11 @@
 
 Creative is an installable Codex skill that pushes an LLM away from default answers while keeping the answer useful, feasible, and simple.
 
-This repo contains Creative, benchmark code, a default task set, and generated benchmark results that make the effect visible.
+This repo contains Creative, benchmark code, a default task set, and generated example results that make the benchmark pipeline visible.
 
-Benchmark headline: in the committed dry run, Creative beat the baseline on useful wins and originality while staying under the feasibility-loss and overcomplication limits.
+Important: the committed numbers below are dry-run example results. They prove the benchmark code works without API keys. They do not prove Creative beats the baseline on real model outputs yet. To test that claim, run the real benchmark with `OPENAI_API_KEY`.
 
-## Current benchmark result
+## Example dry-run benchmark result
 
 <!-- BENCHMARK_TABLE_START -->
 | Metric | Value | Threshold | Status |
@@ -54,7 +54,7 @@ Use `skills/creative/SKILL.md` as the installable Creative skill file. In this r
 
 ## Run dry benchmark
 
-Dry run mode does not call the OpenAI API.
+Dry run mode does not call the OpenAI API. It uses deterministic fake answers and fake judgments so CI can verify the benchmark pipeline.
 
 ```bash
 python -m creative_bench.cli run --dry-run
@@ -67,7 +67,7 @@ Dry run outputs:
 
 ## Run real benchmark
 
-Real runs require `OPENAI_API_KEY`.
+Real runs require `OPENAI_API_KEY`. This is the run that tests whether Creative actually changes model outputs compared with baseline.
 
 ```bash
 cp .env.example .env
