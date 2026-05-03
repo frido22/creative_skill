@@ -1,6 +1,6 @@
-# CreativeBench
+# Creative Skill Benchmark
 
-CreativeBench tests whether a small SKILL.md can make an LLM produce less default answers without becoming less useful.
+CreativeBench tests whether the Creative skill, a small `SKILL.md`, can make an LLM produce less default answers without becoming less useful.
 
 ## Current benchmark result
 
