@@ -113,7 +113,6 @@
       "tie_rate": 0.2
     }
   },
-  "dry_run": false,
   "gen_model": "gpt-5.5",
   "judge_model": "gpt-5.5",
   "metrics": {

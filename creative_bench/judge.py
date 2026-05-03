@@ -150,94 +150,43 @@ def _call_judge(client: OpenAI, settings: Settings, pair: dict) -> JudgmentPaylo
     raise RuntimeError("Judge returned malformed JSON twice.") from last_error
 
 
-def _fake_judgment(pair: dict, index: int) -> JudgmentPayload:
-    creative_is_a = pair["hidden_label_a"] == "creative"
-    creative_score = {
-        "originality": 5 if index % 10 != 0 else 3,
-        "usefulness": 4 if index % 8 != 0 else 3,
-        "feasibility": 4 if index % 9 != 0 else 3,
-        "specificity": 4,
-        "simplicity": 4 if index % 7 != 0 else 3,
-    }
-    baseline_score = {
-        "originality": 3,
-        "usefulness": 3,
-        "feasibility": 4,
-        "specificity": 3,
-        "simplicity": 4,
-    }
-    winner = "tie" if index % 13 == 0 else ("A" if creative_is_a else "B")
-    if index % 11 == 0:
-        winner = "B" if creative_is_a else "A"
-    scores_a = creative_score if creative_is_a else baseline_score
-    scores_b = baseline_score if creative_is_a else creative_score
-    return JudgmentPayload(
-        scores_a=AnswerScore(**scores_a),
-        scores_b=AnswerScore(**scores_b),
-        overall_winner=winner,
-        nonsense_a=False,
-        nonsense_b=False,
-        overcomplicated_a=creative_is_a and index % 10 == 0,
-        overcomplicated_b=(not creative_is_a) and index % 10 == 0,
-        short_reason="Dry run judgment favors the answer that is more concrete and less generic.",
-    )
-
-
 def judge_pairs(
     pairs: list[dict],
     settings: Settings,
-    dry_run: bool = False,
     output_path: Path | None = None,
 ) -> list[dict[str, Any]]:
     rows = []
     handle = None
-    if output_path and not dry_run:
+    if output_path:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         handle = output_path.open("w", encoding="utf-8")
 
-    if dry_run:
-        payloads = [_fake_judgment(pair, index) for index, pair in enumerate(pairs, start=1)]
-        for pair, payload in zip(pairs, payloads):
-            rows.append(
-                {
+    require_api_key()
+    client = OpenAI()
+    try:
+        with ThreadPoolExecutor(max_workers=settings.max_workers) as executor:
+            future_to_pair = {
+                executor.submit(_call_judge, client, settings, pair): pair for pair in pairs
+            }
+            for completed, future in enumerate(as_completed(future_to_pair), start=1):
+                pair = future_to_pair[future]
+                print(
+                    f"Judged pair {completed}/{len(pairs)}: {pair['task_id']}",
+                    flush=True,
+                )
+                payload = future.result()
+                row = {
                     "task_id": pair["task_id"],
                     "category": pair["category"],
                     "hidden_label_a": pair["hidden_label_a"],
                     "hidden_label_b": pair["hidden_label_b"],
                     **payload.model_dump(),
                 }
-            )
-    else:
-        require_api_key()
-        client = OpenAI()
-        try:
-            with ThreadPoolExecutor(max_workers=settings.max_workers) as executor:
-                future_to_pair = {
-                    executor.submit(_call_judge, client, settings, pair): pair for pair in pairs
-                }
-                for completed, future in enumerate(as_completed(future_to_pair), start=1):
-                    pair = future_to_pair[future]
-                    print(
-                        f"Judged pair {completed}/{len(pairs)}: {pair['task_id']}",
-                        flush=True,
-                    )
-                    payload = future.result()
-                    row = {
-                        "task_id": pair["task_id"],
-                        "category": pair["category"],
-                        "hidden_label_a": pair["hidden_label_a"],
-                        "hidden_label_b": pair["hidden_label_b"],
-                        **payload.model_dump(),
-                    }
-                    rows.append(row)
-                    if handle:
-                        handle.write(json.dumps(row, ensure_ascii=True, sort_keys=True) + "\n")
-                        handle.flush()
-        finally:
-            if handle:
-                handle.close()
-    if handle:
-        handle.close()
-    if output_path and dry_run:
-        write_jsonl(output_path, rows)
+                rows.append(row)
+                if handle:
+                    handle.write(json.dumps(row, ensure_ascii=True, sort_keys=True) + "\n")
+                    handle.flush()
+    finally:
+        if handle:
+            handle.close()
     return rows

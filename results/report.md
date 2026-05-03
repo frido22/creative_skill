@@ -1,6 +1,6 @@
 # Creative Benchmark Report
 
-Creative real benchmark result: PASS
+Creative benchmark result: PASS
 
 Creative passed: it made answers less default while staying useful and feasible often enough to clear the benchmark thresholds.
 

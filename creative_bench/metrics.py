@@ -98,7 +98,6 @@ def compute_summary(
     judgments: list[dict[str, Any]],
     gen_model: str,
     judge_model: str,
-    dry_run: bool,
 ) -> dict[str, Any]:
     categories = sorted({row["category"] for row in judgments})
     by_category = {
@@ -107,7 +106,6 @@ def compute_summary(
     }
     metrics = _compute_rows(judgments)
     return {
-        "dry_run": dry_run,
         "task_count": len(judgments),
         "gen_model": gen_model,
         "judge_model": judge_model,

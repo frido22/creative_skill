@@ -63,19 +63,6 @@ python -m pip install -e ".[dev]"
 
 Use `skills/creative/SKILL.md` as the installable Creative skill file. In this repo, the benchmark code reads that exact file when it runs Creative mode.
 
-## Run dry benchmark
-
-Dry run mode does not call the OpenAI API. It uses deterministic fake answers and fake judgments so CI can verify the benchmark pipeline.
-
-```bash
-python -m creative_bench.cli run --dry-run
-```
-
-Dry run outputs:
-
-- `results/example_summary.json`
-- `results/example_report.md`
-
 ## Run real benchmark
 
 Real runs require `OPENAI_API_KEY`. This is the run that tests whether Creative actually changes model outputs compared with baseline.
@@ -133,8 +120,8 @@ creative_bench/
   skills/creative/SKILL.md
   creative_bench/
   data/tasks.jsonl
-  results/example_summary.json
-  results/example_report.md
+  results/summary.json
+  results/report.md
   tests/
 ```
 

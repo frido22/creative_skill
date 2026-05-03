@@ -115,21 +115,14 @@ def _short_lists(judgments: list[dict[str, Any]]) -> tuple[list[dict[str, Any]],
 def write_report(summary: dict[str, Any], judgments: list[dict[str, Any]], path: Path) -> str:
     wins, failures = _short_lists(judgments)
     status = "PASS" if summary["pass"] else "FAIL"
-    run_type = "dry-run example" if summary["dry_run"] else "real benchmark"
-    caveat = (
-        "This dry-run report uses deterministic fake answers and fake judgments. It verifies "
-        "the benchmark pipeline, not the real effectiveness of Creative."
-        if summary["dry_run"]
-        else "This report uses real model outputs and automated blind judging."
-    )
     lines = [
         "# Creative Benchmark Report",
         "",
-        f"Creative {run_type} result: {status}",
+        f"Creative benchmark result: {status}",
         "",
         plain_english_summary(summary),
         "",
-        caveat,
+        "This report uses real model outputs and automated blind judging.",
         "",
         "Short version: this benchmark does not ask whether Creative is weird. It asks whether "
         "Creative is better than a normal answer while still being practical.",

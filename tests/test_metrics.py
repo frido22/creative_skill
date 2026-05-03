@@ -31,7 +31,7 @@ def _row(task_id: str, winner: str = "A", creative_side: str = "a") -> dict:
 
 
 def test_metric_calculation() -> None:
-    summary = compute_summary([_row("one"), _row("two", winner="tie")], "gen", "judge", True)
+    summary = compute_summary([_row("one"), _row("two", winner="tie")], "gen", "judge")
     metrics = summary["metrics"]
     assert metrics["creative_valid_win_rate"] == 0.5
     assert metrics["creative_originality_win_rate"] == 1.0
