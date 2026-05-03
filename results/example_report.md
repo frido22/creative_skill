@@ -1,10 +1,21 @@
 # Creative Benchmark Report
 
-Creative dry-run example result: PASS.
+Creative dry-run example result: PASS
+
+Creative passed: it made answers less default while staying useful and feasible often enough to clear the benchmark thresholds.
 
 This dry-run report uses deterministic fake answers and fake judgments. It verifies the benchmark pipeline, not the real effectiveness of Creative.
 
-Creative is compared against a normal baseline answer. The benchmark rewards answers that are more useful, original, feasible, specific, and simple.
+Short version: this benchmark does not ask whether Creative is weird. It asks whether Creative is better than a normal answer while still being practical.
+
+## Reader Summary
+
+| Plain-English Question | Answer | What The Number Says |
+| --- | --- | --- |
+| Does Creative make answers more original? | Yes, strongly. | Creative was more original in 90% of tasks. |
+| Does Creative reliably produce the better answer? | Not yet. | Valid win rate was 75%; passing needs 60%. |
+| Does Creative stay practical? | Needs work. | Feasibility loss was 10%; passing needs 15% or less. |
+| Does Creative become too complicated? | No. | Overcomplication was 10%; passing allows up to 20%. |
 
 ## Method
 
@@ -14,7 +25,7 @@ Tasks: 40
 Generation model: gpt-5.5
 Judge model: gpt-5.5
 
-## Headline Metrics
+## Technical Metrics
 
 | Metric | Value | Threshold | Status |
 | --- | ---: | --- | --- |
