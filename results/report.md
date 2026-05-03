@@ -1,8 +1,8 @@
 # Creative Benchmark Report
 
-Creative real benchmark result: FAIL
+Creative real benchmark result: PASS
 
-Creative is working as an originality booster, but it is not reliable enough yet. It made answers more original, but too often lost feasibility compared with the baseline.
+Creative passed: it made answers less default while staying useful and feasible often enough to clear the benchmark thresholds.
 
 This report uses real model outputs and automated blind judging.
 
@@ -12,10 +12,10 @@ Short version: this benchmark does not ask whether Creative is weird. It asks wh
 
 | Plain-English Question | Answer | What The Number Says |
 | --- | --- | --- |
-| Does Creative make answers more original? | Yes, strongly. | Creative was more original in 90% of tasks. |
-| Does Creative reliably produce the better answer? | Not yet. | Valid win rate was 48%; passing needs 50%. |
-| Does Creative stay practical? | Needs work. | Feasibility loss was 38%; passing needs 50% or less. |
-| Does Creative become too complicated? | No. | Overcomplication was 2%; passing allows up to 50%. |
+| Does Creative make answers more original? | Yes, strongly. | Creative was more original in 95% of tasks. |
+| Does Creative reliably produce the better answer? | Yes, at the current threshold. | Valid win rate was 50%; passing needs 50%. |
+| Does Creative stay practical? | Yes, within the current threshold. | Feasibility loss was 38%; passing needs 50% or less. |
+| Does Creative become too complicated? | No. | Overcomplication was 0%; passing allows up to 50%. |
 
 ## Method
 
@@ -29,43 +29,43 @@ Judge model: gpt-5.5
 
 | Metric | Value | Threshold | Status |
 | --- | ---: | --- | --- |
-| `creative_valid_win_rate` | 47.50% | >= 50% | FAIL |
-| `creative_originality_win_rate` | 90.00% | >= 70% | PASS |
+| `creative_valid_win_rate` | 50.00% | >= 50% | PASS |
+| `creative_originality_win_rate` | 95.00% | >= 70% | PASS |
 | `creative_feasibility_loss_rate` | 37.50% | <= 50% | PASS |
-| `creative_overcomplication_rate` | 2.50% | <= 50% | PASS |
+| `creative_overcomplication_rate` | 0.00% | <= 50% | PASS |
 
 ## Pass/Fail
 
-Overall status: FAIL
+Overall status: PASS
 
 ## Per Category Breakdown
 
 | Category | Valid win rate | Originality win rate | Feasibility loss rate |
 | --- | ---: | ---: | ---: |
-| agent_workflow | 60.00% | 80.00% | 40.00% |
-| code_architecture | 40.00% | 100.00% | 60.00% |
-| debugging | 0.00% | 100.00% | 100.00% |
+| agent_workflow | 40.00% | 100.00% | 60.00% |
+| code_architecture | 20.00% | 100.00% | 60.00% |
+| debugging | 20.00% | 100.00% | 80.00% |
 | design | 40.00% | 80.00% | 60.00% |
-| naming | 60.00% | 100.00% | 20.00% |
-| product_strategy | 80.00% | 100.00% | 20.00% |
-| research_framing | 60.00% | 80.00% | 0.00% |
+| naming | 60.00% | 100.00% | 40.00% |
+| product_strategy | 100.00% | 100.00% | 0.00% |
+| research_framing | 80.00% | 100.00% | 0.00% |
 | writing | 40.00% | 80.00% | 0.00% |
 
 ## Top 5 Creative Wins
 
-- `writing_001`: B is more distinctive and memorable, though the final meta note is unnecessary. A is clean and usable but relies on familiar SaaS phrasing.
-- `naming_002`: Both satisfy the request, but B is more memorable and original while staying concrete and free of AI buzzwords. A is clearer and simpler, but less distinctive.
-- `naming_004`: B gives a clear primary workshop name immediately, with a strong tagline and sharper, less bland alternatives. A is also solid, but its top recommendation is slightly more conventional.
-- `naming_003`: A gives a sharper, more distinctive recommendation with a strong metaphor and clear positioning. B has several usable options, but the best picks are more generic or harder to own.
-- `naming_001`: A is clear and brandable but relies on a familiar metaphor. B is more original, more specific to the actual anti-default mechanism, and feels like a usable coding primitive, though 'refusal' may carry some ambiguity.
+- `naming_002`: Both satisfy the request, but B offers a more memorable and original tool name while staying clear and free of buzzwords.
+- `writing_001`: B is more distinctive and memorable, with a stronger voice. A is polished and usable but closer to familiar SaaS phrasing.
+- `naming_003`: A gives a sharper, more distinctive single recommendation with strong rationale and usable taglines. B has several decent options but is more list-like and includes more generic or less ownable names.
+- `naming_004`: Both are strong, but B offers a sharper primary name, a usable tagline, and several memorable alternatives with clearer positioning for engineering audiences.
+- `naming_001`: B is more distinctive and specific: it names a concrete mechanism for escaping default answers rather than using a broader metaphor. A is clear and usable, but 'Escape Velocity' is a more familiar metaphor and less precise.
 
 ## Top 5 Creative Failures
 
-- `naming_005`: A is clearer, simpler, and directly communicates a penalty for pointless quirkiness. B is more evocative and original, but less immediately legible as a benchmark name.
-- `writing_004`: B is a cleaner, ready-to-use product update with clear sections and no apology language. A is also solid, but the final meta-comment about the creative move does not belong in the customer-facing update.
-- `writing_003`: A is clearer, more directly tied to automated benchmarking, and offers several usable alternatives. B is punchier and original, but slightly more metaphorical and less immediately clear.
-- `code_architecture_002`: Both give clear small-boundary architectures, but B is more immediately feasible and simpler by leaning on existing form primitives instead of building a custom lifecycle hook, while still avoiding a giant framework.
-- `code_architecture_004`: Both answers propose the right direction: inventory current behavior, extract only retry mechanics, keep policies explicit, test and migrate incrementally. B is slightly better because it is simpler and more directly feasible, while A introduces extra classifier/scheduler structure and sample code with some inconsistencies.
+- `naming_005`: A is clearer, simpler, and directly communicates the benchmark’s purpose. B is more original but less immediately understandable as a benchmark name.
+- `writing_003`: A is clearer, more directly usable as a homepage subheading, and offers several strong alternatives. B is punchier and original, but slightly less clear with phrases like “quality moves.”
+- `writing_004`: B is more directly usable as a product update, with clearer structure, customer impact, alternatives, and rationale. A is good but includes an out-of-place meta note at the end.
+- `code_architecture_002`: Both answers give clear small-boundary architectures, but B is slightly more feasible and simpler because it builds on proven form libraries while keeping schemas, hooks, UI fields, and layout feature-owned rather than inventing a custom lifecycle layer.
+- `code_architecture_004`: Both are strong and recommend sharing only retry mechanics while keeping policies explicit. B is slightly clearer and more feasible, with practical migration, hooks for special cases, observability, and fewer abstraction/code inconsistencies than A.
 
 ## Limitations
 

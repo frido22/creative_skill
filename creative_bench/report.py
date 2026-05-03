@@ -37,6 +37,12 @@ def reader_table(summary: dict[str, Any]) -> str:
     valid_threshold = THRESHOLDS["creative_valid_win_rate"][1]
     feasibility_threshold = THRESHOLDS["creative_feasibility_loss_rate"][1]
     overcomplication_threshold = THRESHOLDS["creative_overcomplication_rate"][1]
+    valid_answer = "Yes, at the current threshold." if summary["pass"] else "Not yet."
+    feasibility_answer = (
+        "Yes, within the current threshold."
+        if metrics["creative_feasibility_loss_rate"] <= feasibility_threshold
+        else "Needs work."
+    )
     rows = [
         "| Plain-English Question | Answer | What The Number Says |",
         "| --- | --- | --- |",
@@ -45,12 +51,12 @@ def reader_table(summary: dict[str, Any]) -> str:
             f"Creative was more original in {metrics['creative_originality_win_rate']:.0%} of tasks. |"
         ),
         (
-            "| Does Creative reliably produce the better answer? | Not yet. | "
+            f"| Does Creative reliably produce the better answer? | {valid_answer} | "
             f"Valid win rate was {metrics['creative_valid_win_rate']:.0%}; "
             f"passing needs {valid_threshold:.0%}. |"
         ),
         (
-            "| Does Creative stay practical? | Needs work. | "
+            f"| Does Creative stay practical? | {feasibility_answer} | "
             f"Feasibility loss was {metrics['creative_feasibility_loss_rate']:.0%}; "
             f"passing needs {feasibility_threshold:.0%} or less. |"
         ),

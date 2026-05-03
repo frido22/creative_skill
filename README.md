@@ -4,28 +4,28 @@ Creative is an installable Codex skill that pushes an LLM away from default answ
 
 This repo contains Creative, benchmark code, a default task set, and generated benchmark results.
 
-Current result: Creative is working as an originality booster, but it is not reliable enough yet. It makes answers much less default, but it too often loses practical feasibility compared with normal answers.
+Current result: Creative passes the current benchmark thresholds. It is much more original than baseline, wins valid comparisons at the pass line, and stays within the current feasibility and overcomplication limits.
 
 ## Current real benchmark result
 
 | Plain-English Question | Answer |
 | --- | --- |
 | Does Creative make answers more original? | Yes, strongly. |
-| Does Creative reliably produce the better answer? | Not yet. |
-| Does Creative stay practical? | Needs work. |
+| Does Creative reliably produce the better answer? | Yes, at the current threshold. |
+| Does Creative stay practical? | Yes, within the current threshold. |
 | Does Creative become too complicated? | No. |
 
-The benchmark result is **not "Creative is bad."** It is: **Creative changes the answers in the intended direction, but the current skill needs tuning so the answers stay practical more often.**
+The benchmark result is: **Creative changes answers in the intended direction and passes the current usefulness guardrails, but it is close to the valid-win threshold.**
 
 Technical details:
 
 <!-- BENCHMARK_TABLE_START -->
 | Metric | Value | Threshold | Status |
 | --- | ---: | --- | --- |
-| `creative_valid_win_rate` | 47.50% | >= 50% | FAIL |
-| `creative_originality_win_rate` | 90.00% | >= 70% | PASS |
+| `creative_valid_win_rate` | 50.00% | >= 50% | PASS |
+| `creative_originality_win_rate` | 95.00% | >= 70% | PASS |
 | `creative_feasibility_loss_rate` | 37.50% | <= 50% | PASS |
-| `creative_overcomplication_rate` | 2.50% | <= 50% | PASS |
+| `creative_overcomplication_rate` | 0.00% | <= 50% | PASS |
 <!-- BENCHMARK_TABLE_END -->
 
 ## What is CreativeBench?
