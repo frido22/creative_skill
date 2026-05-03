@@ -20,6 +20,6 @@ def test_dry_run_command_generates_example_outputs() -> None:
 def test_report_generation_contains_required_sections() -> None:
     command_run(dry_run=True)
     report = (RESULTS_DIR / "example_report.md").read_text(encoding="utf-8")
-    assert "# CreativeBench Report" in report
+    assert "# Creative Benchmark Report" in report
     assert "## Per Category Breakdown" in report
     assert "## Top 5 Creative Wins" in report

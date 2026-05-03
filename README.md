@@ -1,8 +1,10 @@
-# Creative Skill Benchmark
+# Creative
 
-CreativeBench tests whether the Creative skill, a small `SKILL.md`, can make an LLM produce less default answers without becoming less useful.
+Creative is an installable Codex skill that pushes an LLM away from default answers while keeping the answer useful, feasible, and simple.
 
-This repo contains the installable Creative skill, benchmark code, default task set, and generated dry-run benchmark results.
+This repo contains Creative, benchmark code, a default task set, and generated benchmark results that make the effect visible.
+
+Benchmark headline: in the committed dry run, Creative beat the baseline on useful wins and originality while staying under the feasibility-loss and overcomplication limits.
 
 ## Current benchmark result
 
@@ -17,15 +19,15 @@ This repo contains the installable Creative skill, benchmark code, default task 
 
 ## What is CreativeBench?
 
-CreativeBench is an automated benchmark for testing whether a small Creative `SKILL.md` changes LLM outputs in a useful direction. It compares normal answers against answers generated with the Creative skill, then judges the pair blindly.
+CreativeBench is an automated benchmark for testing whether Creative changes LLM outputs in a useful direction. It compares normal answers against answers generated with Creative, then judges the pair blindly.
 
-## What is the Creative skill?
+## What is Creative?
 
-The Creative skill asks the model to reject the first clean answer, generate stronger alternatives with specific moves, and keep only the idea that is more useful than the obvious/default answer. The skill lives at `skills/creative/SKILL.md`.
+Creative asks the model to reject the first clean answer, generate stronger alternatives with specific moves, and keep only the idea that is more useful than the obvious/default answer. The installable file lives at `skills/creative/SKILL.md`.
 
 ## Why benchmark this?
 
-Prompts that ask for originality can drift into novelty without utility. CreativeBench tests whether the skill produces less default answers while preserving usefulness, feasibility, specificity, and simplicity.
+Prompts that ask for originality can drift into novelty without utility. CreativeBench tests whether Creative produces less default answers while preserving usefulness, feasibility, specificity, and simplicity.
 
 The benchmark is automated. It uses blind pairwise judging. The main metric is `creative_valid_win_rate`. The benchmark punishes weird but useless answers.
 
@@ -36,7 +38,7 @@ CreativeBench is not a replacement for human evaluation, but it is a fast first-
 For each task, CreativeBench generates two answers:
 
 1. Baseline mode: answer normally.
-2. Creative mode: answer using the Creative skill.
+2. Creative mode: answer using Creative.
 
 It randomizes whether the baseline or creative answer appears as answer A. The judge does not see the labels. The judge scores originality, usefulness, feasibility, specificity, and simplicity, then chooses an overall winner or tie.
 
@@ -45,6 +47,10 @@ It randomizes whether the baseline or creative answer appears as answer A. The j
 ```bash
 python -m pip install -e ".[dev]"
 ```
+
+## Install Creative
+
+Use `skills/creative/SKILL.md` as the installable Creative skill file. In this repo, the benchmark code reads that exact file when it runs Creative mode.
 
 ## Run dry benchmark
 

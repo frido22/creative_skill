@@ -62,9 +62,12 @@ def write_report(summary: dict[str, Any], judgments: list[dict[str, Any]], path:
     wins, failures = _short_lists(judgments)
     status = "PASS" if summary["pass"] else "FAIL"
     lines = [
-        "# CreativeBench Report",
+        "# Creative Benchmark Report",
         "",
-        f"CreativeBench result: {status}.",
+        f"Creative result: {status}.",
+        "",
+        "Creative is compared against a normal baseline answer. The benchmark rewards answers "
+        "that are more useful, original, feasible, specific, and simple.",
         "",
         "## Method",
         "",
@@ -107,7 +110,7 @@ def write_report(summary: dict[str, Any], judgments: list[dict[str, Any]], path:
             "## Limitations",
             "",
             "This benchmark uses automated judging, so it is not a replacement for human review. "
-            "It is a fast first-pass test for whether a small skill changes outputs in a useful direction.",
+            "It is a fast first-pass test for whether Creative changes outputs in a useful direction.",
             "",
             "## Next Steps",
             "",

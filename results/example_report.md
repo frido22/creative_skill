@@ -1,6 +1,8 @@
-# CreativeBench Report
+# Creative Benchmark Report
 
-CreativeBench result: PASS.
+Creative result: PASS.
+
+Creative is compared against a normal baseline answer. The benchmark rewards answers that are more useful, original, feasible, specific, and simple.
 
 ## Method
 
@@ -52,7 +54,7 @@ Overall status: PASS
 
 ## Limitations
 
-This benchmark uses automated judging, so it is not a replacement for human review. It is a fast first-pass test for whether a small skill changes outputs in a useful direction.
+This benchmark uses automated judging, so it is not a replacement for human review. It is a fast first-pass test for whether Creative changes outputs in a useful direction.
 
 ## Next Steps
 
