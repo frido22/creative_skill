@@ -12,7 +12,7 @@ Current result: Creative passes the current benchmark thresholds. It is much mor
 | --- | --- |
 | Does Creative make answers more original? | Yes, strongly. |
 | Does Creative reliably produce the better answer? | Yes, at the current threshold. |
-| Does Creative stay practical? | Yes, within the current threshold. |
+| Does Creative stay practical? | Yes, at the current threshold. |
 | Does Creative become too complicated? | No. |
 
 The benchmark result is: **Creative changes answers in the intended direction and passes the current usefulness guardrails, but it is close to the valid-win threshold.**

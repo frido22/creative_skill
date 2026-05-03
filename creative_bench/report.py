@@ -39,7 +39,7 @@ def reader_table(summary: dict[str, Any]) -> str:
     overcomplication_threshold = THRESHOLDS["creative_overcomplication_rate"][1]
     valid_answer = "Yes, at the current threshold." if summary["pass"] else "Not yet."
     feasibility_answer = (
-        "Yes, within the current threshold."
+        "Yes, at the current threshold."
         if metrics["creative_feasibility_loss_rate"] <= feasibility_threshold
         else "Needs work."
     )

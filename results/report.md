@@ -14,7 +14,7 @@ Short version: this benchmark does not ask whether Creative is weird. It asks wh
 | --- | --- | --- |
 | Does Creative make answers more original? | Yes, strongly. | Creative was more original in 95% of tasks. |
 | Does Creative reliably produce the better answer? | Yes, at the current threshold. | Valid win rate was 50%; passing needs 50%. |
-| Does Creative stay practical? | Yes, within the current threshold. | Feasibility loss was 38%; passing needs 50% or less. |
+| Does Creative stay practical? | Yes, at the current threshold. | Feasibility loss was 38%; passing needs 50% or less. |
 | Does Creative become too complicated? | No. | Overcomplication was 0%; passing allows up to 50%. |
 
 ## Method
