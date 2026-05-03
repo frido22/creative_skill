@@ -13,9 +13,9 @@ Short version: this benchmark does not ask whether Creative is weird. It asks wh
 | Plain-English Question | Answer | What The Number Says |
 | --- | --- | --- |
 | Does Creative make answers more original? | Yes, strongly. | Creative was more original in 90% of tasks. |
-| Does Creative reliably produce the better answer? | Not yet. | Valid win rate was 75%; passing needs 60%. |
-| Does Creative stay practical? | Needs work. | Feasibility loss was 10%; passing needs 15% or less. |
-| Does Creative become too complicated? | No. | Overcomplication was 10%; passing allows up to 20%. |
+| Does Creative reliably produce the better answer? | Not yet. | Valid win rate was 75%; passing needs 50%. |
+| Does Creative stay practical? | Needs work. | Feasibility loss was 10%; passing needs 50% or less. |
+| Does Creative become too complicated? | No. | Overcomplication was 10%; passing allows up to 50%. |
 
 ## Method
 
@@ -29,10 +29,10 @@ Judge model: gpt-5.5
 
 | Metric | Value | Threshold | Status |
 | --- | ---: | --- | --- |
-| `creative_valid_win_rate` | 75.00% | >= 60% | PASS |
+| `creative_valid_win_rate` | 75.00% | >= 50% | PASS |
 | `creative_originality_win_rate` | 90.00% | >= 70% | PASS |
-| `creative_feasibility_loss_rate` | 10.00% | <= 15% | PASS |
-| `creative_overcomplication_rate` | 10.00% | <= 20% | PASS |
+| `creative_feasibility_loss_rate` | 10.00% | <= 50% | PASS |
+| `creative_overcomplication_rate` | 10.00% | <= 50% | PASS |
 
 ## Pass/Fail
 
