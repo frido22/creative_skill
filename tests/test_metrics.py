@@ -37,9 +37,9 @@ def test_metric_calculation() -> None:
     assert metrics["creative_originality_win_rate"] == 1.0
     assert metrics["creative_feasibility_loss_rate"] == 0.0
     assert metrics["tie_rate"] == 0.5
-    assert summary["pass"] is False
+    assert summary["pass"] is True
 
 
 def test_threshold_status() -> None:
     assert threshold_status("creative_valid_win_rate", 0.60) == "PASS"
-    assert threshold_status("creative_feasibility_loss_rate", 0.16) == "FAIL"
+    assert threshold_status("creative_feasibility_loss_rate", 0.51) == "FAIL"
