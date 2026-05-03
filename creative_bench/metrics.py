@@ -5,8 +5,8 @@ from typing import Any
 
 
 THRESHOLDS = {
-    "creative_valid_win_rate": (">=", 0.50),
     "creative_originality_win_rate": (">=", 0.70),
+    "creative_valid_win_rate": (">=", 0.50),
     "creative_feasibility_loss_rate": ("<=", 0.50),
     "creative_overcomplication_rate": ("<=", 0.50),
 }

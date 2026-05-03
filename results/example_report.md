@@ -29,8 +29,8 @@ Judge model: gpt-5.5
 
 | Metric | Value | Threshold | Status |
 | --- | ---: | --- | --- |
-| `creative_valid_win_rate` | 75.00% | >= 50% | PASS |
 | `creative_originality_win_rate` | 90.00% | >= 70% | PASS |
+| `creative_valid_win_rate` | 75.00% | >= 50% | PASS |
 | `creative_feasibility_loss_rate` | 10.00% | <= 50% | PASS |
 | `creative_overcomplication_rate` | 10.00% | <= 50% | PASS |
 
