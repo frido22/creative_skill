@@ -20,6 +20,8 @@ class Settings:
     judge_model: str
     temperature: float
     seed: int
+    reasoning_effort: str
+    max_workers: int
     root: Path = ROOT
     data_dir: Path = DATA_DIR
     results_dir: Path = RESULTS_DIR
@@ -30,10 +32,12 @@ class Settings:
 def load_settings() -> Settings:
     load_dotenv()
     return Settings(
-        gen_model=os.getenv("GEN_MODEL", "gpt-5.4"),
+        gen_model=os.getenv("GEN_MODEL", "gpt-5.5"),
         judge_model=os.getenv("JUDGE_MODEL", "gpt-5.5"),
         temperature=float(os.getenv("TEMPERATURE", "0.8")),
         seed=int(os.getenv("SEED", "42")),
+        reasoning_effort=os.getenv("REASONING_EFFORT", "medium"),
+        max_workers=int(os.getenv("MAX_WORKERS", "6")),
     )
 
 

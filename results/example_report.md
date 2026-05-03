@@ -11,7 +11,7 @@ Creative is compared against a normal baseline answer. The benchmark rewards ans
 The benchmark generates baseline and creative answers for each task, randomizes answer order, and asks an automated judge to compare the pair without seeing labels.
 
 Tasks: 40
-Generation model: gpt-5.4
+Generation model: gpt-5.5
 Judge model: gpt-5.5
 
 ## Headline Metrics

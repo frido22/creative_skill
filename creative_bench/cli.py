@@ -32,6 +32,12 @@ def _paths(dry_run: bool) -> dict[str, Path]:
     }
 
 
+def _update_readme_for_summary(readme_path: Path, summary: dict) -> None:
+    if summary["dry_run"] and (RESULTS_DIR / "summary.json").exists():
+        return
+    update_readme(readme_path, summary)
+
+
 def command_generate(dry_run: bool) -> None:
     settings = load_settings()
     tasks = load_tasks()
@@ -63,7 +69,7 @@ def command_judge(dry_run: bool) -> None:
     summary = compute_summary(judgments, settings.gen_model, settings.judge_model, dry_run)
     write_summary(summary, paths["summary"])
     write_report(summary, judgments, paths["report"])
-    update_readme(settings.readme_path, summary)
+    _update_readme_for_summary(settings.readme_path, summary)
     console.print(f"Judged {len(judgments)} pairs.")
 
 
@@ -90,7 +96,7 @@ def command_report() -> None:
     summary = json.loads(summary_path.read_text(encoding="utf-8"))
     report_path = RESULTS_DIR / ("report.md" if summary_path.name == "summary.json" else "example_report.md")
     write_report(summary, judgments, report_path)
-    update_readme(settings.readme_path, summary)
+    _update_readme_for_summary(settings.readme_path, summary)
     console.print(f"Wrote {report_path}.")
 
 
@@ -128,7 +134,7 @@ def command_run(dry_run: bool) -> None:
     summary = compute_summary(judgments, settings.gen_model, settings.judge_model, dry_run)
     write_summary(summary, paths["summary"])
     write_report(summary, judgments, paths["report"])
-    update_readme(settings.readme_path, summary)
+    _update_readme_for_summary(settings.readme_path, summary)
     console.print(f"Benchmark complete: {'PASS' if summary['pass'] else 'FAIL'}")
 
 

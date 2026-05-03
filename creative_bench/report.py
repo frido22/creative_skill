@@ -11,10 +11,6 @@ README_START = "<!-- BENCHMARK_TABLE_START -->"
 README_END = "<!-- BENCHMARK_TABLE_END -->"
 
 
-def format_value(value: float) -> str:
-    return f"{value:.2%}" if "rate" in str(value) or -1.0 <= value <= 1.0 else f"{value:.2f}"
-
-
 def metric_table(summary: dict[str, Any]) -> str:
     rows = ["| Metric | Value | Threshold | Status |", "| --- | ---: | --- | --- |"]
     metrics = summary["metrics"]

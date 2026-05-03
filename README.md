@@ -2,19 +2,19 @@
 
 Creative is an installable Codex skill that pushes an LLM away from default answers while keeping the answer useful, feasible, and simple.
 
-This repo contains Creative, benchmark code, a default task set, and generated example results that make the benchmark pipeline visible.
+This repo contains Creative, benchmark code, a default task set, and generated benchmark results.
 
-Important: the committed numbers below are dry-run example results. They prove the benchmark code works without API keys. They do not prove Creative beats the baseline on real model outputs yet. To test that claim, run the real benchmark with `OPENAI_API_KEY`.
+Current result: Creative is much more original than baseline, but it does not pass the full benchmark yet because feasibility losses are too high.
 
-## Example dry-run benchmark result
+## Current real benchmark result
 
 <!-- BENCHMARK_TABLE_START -->
 | Metric | Value | Threshold | Status |
 | --- | ---: | --- | --- |
-| `creative_valid_win_rate` | 75.00% | >= 60% | PASS |
-| `creative_originality_win_rate` | 90.00% | >= 70% | PASS |
-| `creative_feasibility_loss_rate` | 10.00% | <= 15% | PASS |
-| `creative_overcomplication_rate` | 10.00% | <= 20% | PASS |
+| `creative_valid_win_rate` | 50.00% | >= 60% | FAIL |
+| `creative_originality_win_rate` | 95.00% | >= 70% | PASS |
+| `creative_feasibility_loss_rate` | 37.50% | <= 15% | FAIL |
+| `creative_overcomplication_rate` | 0.00% | <= 20% | PASS |
 <!-- BENCHMARK_TABLE_END -->
 
 ## What is CreativeBench?
@@ -74,6 +74,8 @@ cp .env.example .env
 # Add your API key to .env
 python -m creative_bench.cli run
 ```
+
+By default the real benchmark uses `gpt-5.5` for both generation and judging with medium reasoning effort.
 
 Real run outputs:
 

@@ -114,7 +114,7 @@
     }
   },
   "dry_run": true,
-  "gen_model": "gpt-5.4",
+  "gen_model": "gpt-5.5",
   "judge_model": "gpt-5.5",
   "metrics": {
     "average_feasibility_delta": -0.1,

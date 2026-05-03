@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import random
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from typing import Any
 
@@ -30,7 +31,15 @@ nonsense_b: true or false
 overcomplicated_a: true or false
 overcomplicated_b: true or false
 short_reason: string
-Return JSON only."""
+Return JSON only.
+Use exactly these top-level keys:
+scores_a, scores_b, overall_winner, nonsense_a, nonsense_b, overcomplicated_a, overcomplicated_b, short_reason.
+scores_a and scores_b must each contain exactly:
+originality, usefulness, feasibility, specificity, simplicity."""
+
+
+def _supports_temperature(model: str) -> bool:
+    return not model.startswith("gpt-5.5")
 
 
 class AnswerScore(BaseModel):
@@ -93,20 +102,47 @@ def _judge_prompt(pair: dict) -> str:
 
 
 def _parse_payload(text: str) -> JudgmentPayload:
-    return JudgmentPayload.model_validate(json.loads(text))
+    payload = json.loads(text)
+    if "scores_a" not in payload and "answer_a" in payload:
+        payload["scores_a"] = payload.pop("answer_a")
+    if "scores_b" not in payload and "answer_b" in payload:
+        payload["scores_b"] = payload.pop("answer_b")
+    if "scores_a" not in payload and "scores" in payload:
+        scores = payload.pop("scores")
+        payload["scores_a"] = scores.get("A") or scores.get("a")
+        payload["scores_b"] = scores.get("B") or scores.get("b")
+    if "scores_a" not in payload and "originality_a" in payload:
+        payload["scores_a"] = {
+            "originality": payload.pop("originality_a"),
+            "usefulness": payload.pop("usefulness_a"),
+            "feasibility": payload.pop("feasibility_a"),
+            "specificity": payload.pop("specificity_a"),
+            "simplicity": payload.pop("simplicity_a"),
+        }
+        payload["scores_b"] = {
+            "originality": payload.pop("originality_b"),
+            "usefulness": payload.pop("usefulness_b"),
+            "feasibility": payload.pop("feasibility_b"),
+            "specificity": payload.pop("specificity_b"),
+            "simplicity": payload.pop("simplicity_b"),
+        }
+    return JudgmentPayload.model_validate(payload)
 
 
 def _call_judge(client: OpenAI, settings: Settings, pair: dict) -> JudgmentPayload:
     last_error: Exception | None = None
     for _ in range(2):
-        response = client.responses.create(
-            model=settings.judge_model,
-            temperature=0,
-            input=[
+        request = {
+            "model": settings.judge_model,
+            "reasoning": {"effort": settings.reasoning_effort},
+            "input": [
                 {"role": "system", "content": JUDGE_SYSTEM_PROMPT},
                 {"role": "user", "content": _judge_prompt(pair)},
             ],
-        )
+        }
+        if _supports_temperature(settings.judge_model):
+            request["temperature"] = 0
+        response = client.responses.create(**request)
         try:
             return _parse_payload(response.output_text)
         except (json.JSONDecodeError, ValueError) as exc:
@@ -153,24 +189,55 @@ def judge_pairs(
     dry_run: bool = False,
     output_path: Path | None = None,
 ) -> list[dict[str, Any]]:
+    rows = []
+    handle = None
+    if output_path and not dry_run:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        handle = output_path.open("w", encoding="utf-8")
+
     if dry_run:
         payloads = [_fake_judgment(pair, index) for index, pair in enumerate(pairs, start=1)]
+        for pair, payload in zip(pairs, payloads):
+            rows.append(
+                {
+                    "task_id": pair["task_id"],
+                    "category": pair["category"],
+                    "hidden_label_a": pair["hidden_label_a"],
+                    "hidden_label_b": pair["hidden_label_b"],
+                    **payload.model_dump(),
+                }
+            )
     else:
         require_api_key()
         client = OpenAI()
-        payloads = [_call_judge(client, settings, pair) for pair in pairs]
-
-    rows = []
-    for pair, payload in zip(pairs, payloads):
-        rows.append(
-            {
-                "task_id": pair["task_id"],
-                "category": pair["category"],
-                "hidden_label_a": pair["hidden_label_a"],
-                "hidden_label_b": pair["hidden_label_b"],
-                **payload.model_dump(),
-            }
-        )
-    if output_path:
+        try:
+            with ThreadPoolExecutor(max_workers=settings.max_workers) as executor:
+                future_to_pair = {
+                    executor.submit(_call_judge, client, settings, pair): pair for pair in pairs
+                }
+                for completed, future in enumerate(as_completed(future_to_pair), start=1):
+                    pair = future_to_pair[future]
+                    print(
+                        f"Judged pair {completed}/{len(pairs)}: {pair['task_id']}",
+                        flush=True,
+                    )
+                    payload = future.result()
+                    row = {
+                        "task_id": pair["task_id"],
+                        "category": pair["category"],
+                        "hidden_label_a": pair["hidden_label_a"],
+                        "hidden_label_b": pair["hidden_label_b"],
+                        **payload.model_dump(),
+                    }
+                    rows.append(row)
+                    if handle:
+                        handle.write(json.dumps(row, ensure_ascii=True, sort_keys=True) + "\n")
+                        handle.flush()
+        finally:
+            if handle:
+                handle.close()
+    if handle:
+        handle.close()
+    if output_path and dry_run:
         write_jsonl(output_path, rows)
     return rows
