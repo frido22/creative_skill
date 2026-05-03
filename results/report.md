@@ -1,10 +1,21 @@
 # Creative Benchmark Report
 
-Creative real benchmark result: FAIL.
+Creative real benchmark result: FAIL
+
+Creative is working as an originality booster, but it is not reliable enough yet. It made answers more original, but too often lost feasibility compared with the baseline.
 
 This report uses real model outputs and automated blind judging.
 
-Creative is compared against a normal baseline answer. The benchmark rewards answers that are more useful, original, feasible, specific, and simple.
+Short version: this benchmark does not ask whether Creative is weird. It asks whether Creative is better than a normal answer while still being practical.
+
+## Reader Summary
+
+| Plain-English Question | Answer | What The Number Says |
+| --- | --- | --- |
+| Does Creative make answers more original? | Yes, strongly. | Creative was more original in 95% of tasks. |
+| Does Creative reliably produce the better answer? | Not yet. | Valid win rate was 50%; passing needs 60%. |
+| Does Creative stay practical? | Needs work. | Feasibility loss was 38%; passing needs 15% or less. |
+| Does Creative become too complicated? | No. | Overcomplication was 0%; passing allows up to 20%. |
 
 ## Method
 
@@ -14,7 +25,7 @@ Tasks: 40
 Generation model: gpt-5.5
 Judge model: gpt-5.5
 
-## Headline Metrics
+## Technical Metrics
 
 | Metric | Value | Threshold | Status |
 | --- | ---: | --- | --- |

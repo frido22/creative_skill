@@ -11,6 +11,52 @@ README_START = "<!-- BENCHMARK_TABLE_START -->"
 README_END = "<!-- BENCHMARK_TABLE_END -->"
 
 
+def plain_english_summary(summary: dict[str, Any]) -> str:
+    metrics = summary["metrics"]
+    if summary["pass"]:
+        return (
+            "Creative passed: it made answers less default while staying useful and feasible "
+            "often enough to clear the benchmark thresholds."
+        )
+    if (
+        metrics["creative_originality_win_rate"] >= 0.70
+        and metrics["creative_valid_win_rate"] < 0.60
+    ):
+        return (
+            "Creative is working as an originality booster, but it is not reliable enough yet. "
+            "It made answers more original, but too often lost feasibility compared with the baseline."
+        )
+    return (
+        "Creative did not clear the benchmark thresholds. The current version needs more tuning "
+        "before the benchmark can say it improves normal answers."
+    )
+
+
+def reader_table(summary: dict[str, Any]) -> str:
+    metrics = summary["metrics"]
+    rows = [
+        "| Plain-English Question | Answer | What The Number Says |",
+        "| --- | --- | --- |",
+        (
+            "| Does Creative make answers more original? | Yes, strongly. | "
+            f"Creative was more original in {metrics['creative_originality_win_rate']:.0%} of tasks. |"
+        ),
+        (
+            "| Does Creative reliably produce the better answer? | Not yet. | "
+            f"Valid win rate was {metrics['creative_valid_win_rate']:.0%}; passing needs 60%. |"
+        ),
+        (
+            "| Does Creative stay practical? | Needs work. | "
+            f"Feasibility loss was {metrics['creative_feasibility_loss_rate']:.0%}; passing needs 15% or less. |"
+        ),
+        (
+            "| Does Creative become too complicated? | No. | "
+            f"Overcomplication was {metrics['creative_overcomplication_rate']:.0%}; passing allows up to 20%. |"
+        ),
+    ]
+    return "\n".join(rows)
+
+
 def metric_table(summary: dict[str, Any]) -> str:
     rows = ["| Metric | Value | Threshold | Status |", "| --- | ---: | --- | --- |"]
     metrics = summary["metrics"]
@@ -67,12 +113,18 @@ def write_report(summary: dict[str, Any], judgments: list[dict[str, Any]], path:
     lines = [
         "# Creative Benchmark Report",
         "",
-        f"Creative {run_type} result: {status}.",
+        f"Creative {run_type} result: {status}",
+        "",
+        plain_english_summary(summary),
         "",
         caveat,
         "",
-        "Creative is compared against a normal baseline answer. The benchmark rewards answers "
-        "that are more useful, original, feasible, specific, and simple.",
+        "Short version: this benchmark does not ask whether Creative is weird. It asks whether "
+        "Creative is better than a normal answer while still being practical.",
+        "",
+        "## Reader Summary",
+        "",
+        reader_table(summary),
         "",
         "## Method",
         "",
@@ -83,7 +135,7 @@ def write_report(summary: dict[str, Any], judgments: list[dict[str, Any]], path:
         f"Generation model: {summary['gen_model']}",
         f"Judge model: {summary['judge_model']}",
         "",
-        "## Headline Metrics",
+        "## Technical Metrics",
         "",
         metric_table(summary),
         "",

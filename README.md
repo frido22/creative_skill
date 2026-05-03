@@ -4,9 +4,20 @@ Creative is an installable Codex skill that pushes an LLM away from default answ
 
 This repo contains Creative, benchmark code, a default task set, and generated benchmark results.
 
-Current result: Creative is much more original than baseline, but it does not pass the full benchmark yet because feasibility losses are too high.
+Current result: Creative is working as an originality booster, but it is not reliable enough yet. It makes answers much less default, but it too often loses practical feasibility compared with normal answers.
 
 ## Current real benchmark result
+
+| Plain-English Question | Answer |
+| --- | --- |
+| Does Creative make answers more original? | Yes, strongly. |
+| Does Creative reliably produce the better answer? | Not yet. |
+| Does Creative stay practical? | Needs work. |
+| Does Creative become too complicated? | No. |
+
+The benchmark result is **not "Creative is bad."** It is: **Creative changes the answers in the intended direction, but the current skill needs tuning so the answers stay practical more often.**
+
+Technical details:
 
 <!-- BENCHMARK_TABLE_START -->
 | Metric | Value | Threshold | Status |
@@ -98,15 +109,15 @@ Prompts should describe situations where the obvious/default answer is likely to
 
 ## Interpret metrics
 
-`creative_valid_win_rate` is the main metric. It counts cases where the creative answer wins overall, is not nonsense, and does not lose feasibility.
+`creative_valid_win_rate` is the main "did Creative really win?" metric. It counts cases where the Creative answer wins overall, is not nonsense, and does not lose feasibility. Higher is better.
 
-`creative_originality_win_rate` measures whether the creative answer is more original than baseline.
+`creative_originality_win_rate` measures whether Creative is less default than baseline. Higher is better.
 
-`creative_feasibility_loss_rate` catches cases where creativity makes the answer less practical.
+`creative_feasibility_loss_rate` catches cases where Creative becomes less practical than baseline. Lower is better.
 
-`creative_overcomplication_rate` catches answers that become elaborate without earning the complexity.
+`creative_overcomplication_rate` catches answers that become elaborate without earning the complexity. Lower is better.
 
-The report says PASS only if all success thresholds pass.
+The report says PASS only if all success thresholds pass. A FAIL can still be useful: it shows exactly what needs tuning.
 
 ## Repository structure
 
