@@ -2,6 +2,8 @@
 
 CreativeBench tests whether the Creative skill, a small `SKILL.md`, can make an LLM produce less default answers without becoming less useful.
 
+This repo contains the installable Creative skill, benchmark code, default task set, and generated dry-run benchmark results.
+
 ## Current benchmark result
 
 <!-- BENCHMARK_TABLE_START -->
