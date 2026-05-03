@@ -128,7 +128,3 @@ creative_bench/
 ## Limitations
 
 Automated judging can be biased by the judge model. The task set is intentionally small. Results may change across model versions. The benchmark measures a useful signal, not final product quality.
-
-## Future work
-
-Add human-rated calibration sets, multiple judge models, adversarial tasks, confidence intervals, and richer failure analysis.
