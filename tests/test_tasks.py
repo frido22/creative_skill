@@ -8,8 +8,8 @@ from creative_bench.tasks import Task, load_tasks
 
 def test_load_default_tasks() -> None:
     tasks = load_tasks()
-    assert len(tasks) == 40
-    assert len({task.task_id for task in tasks}) == 40
+    assert len(tasks) >= 80
+    assert len({task.task_id for task in tasks}) == len(tasks)
 
 
 def test_task_schema_validation() -> None:

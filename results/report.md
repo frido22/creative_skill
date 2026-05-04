@@ -1,8 +1,8 @@
 # Creative Benchmark Report
 
-Creative benchmark result: PASS
+Creative benchmark result: measured effect
 
-Creative passed: it made answers less default while staying useful and feasible often enough to clear the benchmark thresholds.
+Creative made answers much less default and won most overall comparisons. The main caveat is feasibility: some creative answers were judged less practical than baseline.
 
 This report uses real model outputs and automated blind judging.
 
@@ -13,9 +13,9 @@ Short version: this benchmark does not ask whether Creative is weird. It asks wh
 | Plain-English Question | Answer | What The Number Says |
 | --- | --- | --- |
 | Does Creative make answers more original? | Yes, strongly. | Creative was more original in 95% of tasks. |
-| Does Creative reliably produce the better answer? | Yes, at the current threshold. | Valid win rate was 50%; passing needs 50%. |
-| Does Creative stay practical? | Yes, at the current threshold. | Feasibility loss was 38%; passing needs 50% or less. |
-| Does Creative become too complicated? | No. | Overcomplication was 0%; passing allows up to 50%. |
+| Does Creative usually beat the baseline? | Often. | Creative won the overall judgment in 70% of tasks. |
+| Does Creative win without losing feasibility? | Mixed. | Valid win rate was 50%. |
+| Does Creative become too complicated? | No. | Overcomplication was flagged in 0% of tasks. |
 
 ## Method
 
@@ -25,18 +25,19 @@ Tasks: 40
 Generation model: gpt-5.5
 Judge model: gpt-5.5
 
-## Technical Metrics
+## Headline Metrics
 
-| Metric | Value | Threshold | Status |
-| --- | ---: | --- | --- |
-| `creative_originality_win_rate` | 95.00% | >= 70% | PASS |
-| `creative_valid_win_rate` | 50.00% | >= 50% | PASS |
-| `creative_feasibility_loss_rate` | 37.50% | <= 50% | PASS |
-| `creative_overcomplication_rate` | 0.00% | <= 50% | PASS |
+| Metric | Value | 95% CI | Interpretation |
+| --- | ---: | ---: | --- |
+| Originality win rate | 95.00% | 83.5%-98.6% | Higher means less default. |
+| Overall win rate | 70.00% | 54.6%-81.9% | Higher means the judge preferred Creative. |
+| Valid win rate | 50.00% | 35.2%-64.8% | Creative won without losing feasibility. |
+| Feasibility loss rate | 37.50% | 24.2%-53.0% | Lower means fewer practicality losses. |
+| Overcomplication rate | 0.00% | 0.0%-8.8% | Lower means fewer bloated answers. |
 
-## Pass/Fail
+## How To Read This
 
-Overall status: PASS
+This benchmark does not use a hard pass/fail threshold. The rates describe observed behavior on the committed task run, and the confidence intervals show uncertainty from the sample size.
 
 ## Per Category Breakdown
 

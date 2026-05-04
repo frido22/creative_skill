@@ -1,15 +1,19 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from math import sqrt
 from typing import Any
 
 
-THRESHOLDS = {
-    "creative_originality_win_rate": (">=", 0.70),
-    "creative_valid_win_rate": (">=", 0.50),
-    "creative_feasibility_loss_rate": ("<=", 0.50),
-    "creative_overcomplication_rate": ("<=", 0.50),
-}
+RATE_METRICS = [
+    "creative_originality_win_rate",
+    "creative_valid_win_rate",
+    "creative_overall_win_rate",
+    "creative_usefulness_win_rate",
+    "creative_feasibility_loss_rate",
+    "creative_overcomplication_rate",
+    "tie_rate",
+]
 
 
 SCORE_FIELDS = ["originality", "usefulness", "feasibility", "specificity", "simplicity"]
@@ -82,16 +86,20 @@ def _compute_rows(rows: list[dict[str, Any]]) -> dict[str, float]:
     }
 
 
-def threshold_status(metric: str, value: float) -> str:
-    if metric not in THRESHOLDS:
-        return ""
-    operator, threshold = THRESHOLDS[metric]
-    passed = value >= threshold if operator == ">=" else value <= threshold
-    return "PASS" if passed else "FAIL"
-
-
-def overall_pass(metrics: dict[str, float]) -> bool:
-    return all(threshold_status(metric, metrics[metric]) == "PASS" for metric in THRESHOLDS)
+def wilson_interval(rate: float, total: int, z: float = 1.96) -> tuple[float, float]:
+    if total == 0:
+        return (0.0, 0.0)
+    count = round(rate * total)
+    denominator = 1 + z * z / total
+    center = (rate + z * z / (2 * total)) / denominator
+    half_width = z * sqrt((rate * (1 - rate) + z * z / (4 * total)) / total) / denominator
+    lower = max(0.0, center - half_width)
+    upper = min(1.0, center + half_width)
+    if count == 0:
+        lower = 0.0
+    if count == total:
+        upper = 1.0
+    return (lower, upper)
 
 
 def compute_summary(
@@ -105,12 +113,15 @@ def compute_summary(
         for category in categories
     }
     metrics = _compute_rows(judgments)
+    confidence_intervals = {
+        metric: wilson_interval(metrics[metric], len(judgments)) for metric in RATE_METRICS
+    }
     return {
         "task_count": len(judgments),
         "gen_model": gen_model,
         "judge_model": judge_model,
         "metrics": metrics,
-        "thresholds": THRESHOLDS,
-        "pass": overall_pass(metrics),
+        "confidence_level": 0.95,
+        "confidence_intervals": confidence_intervals,
         "by_category": by_category,
     }

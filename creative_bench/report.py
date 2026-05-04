@@ -4,45 +4,34 @@ import json
 from pathlib import Path
 from typing import Any
 
-from creative_bench.metrics import THRESHOLDS, threshold_status
-
 
 README_START = "<!-- BENCHMARK_TABLE_START -->"
 README_END = "<!-- BENCHMARK_TABLE_END -->"
 
+HEADLINE_METRICS = [
+    ("creative_originality_win_rate", "Originality win rate", "Higher means less default."),
+    ("creative_overall_win_rate", "Overall win rate", "Higher means the judge preferred Creative."),
+    ("creative_valid_win_rate", "Valid win rate", "Creative won without losing feasibility."),
+    ("creative_feasibility_loss_rate", "Feasibility loss rate", "Lower means fewer practicality losses."),
+    ("creative_overcomplication_rate", "Overcomplication rate", "Lower means fewer bloated answers."),
+]
+
 
 def plain_english_summary(summary: dict[str, Any]) -> str:
     metrics = summary["metrics"]
-    if summary["pass"]:
+    if metrics["creative_originality_win_rate"] >= 0.80:
         return (
-            "Creative passed: it made answers less default while staying useful and feasible "
-            "often enough to clear the benchmark thresholds."
-        )
-    if (
-        metrics["creative_originality_win_rate"] >= 0.70
-        and metrics["creative_valid_win_rate"] < 0.60
-    ):
-        return (
-            "Creative is working as an originality booster, but it is not reliable enough yet. "
-            "It made answers more original, but too often lost feasibility compared with the baseline."
+            "Creative made answers much less default and won most overall comparisons. "
+            "The main caveat is feasibility: some creative answers were judged less practical than baseline."
         )
     return (
-        "Creative did not clear the benchmark thresholds. The current version needs more tuning "
-        "before the benchmark can say it improves normal answers."
+        "Creative changed outputs, but the current run does not show a strong originality effect yet. "
+        "Inspect the per-task judgments before drawing stronger conclusions."
     )
 
 
 def reader_table(summary: dict[str, Any]) -> str:
     metrics = summary["metrics"]
-    valid_threshold = THRESHOLDS["creative_valid_win_rate"][1]
-    feasibility_threshold = THRESHOLDS["creative_feasibility_loss_rate"][1]
-    overcomplication_threshold = THRESHOLDS["creative_overcomplication_rate"][1]
-    valid_answer = "Yes, at the current threshold." if summary["pass"] else "Not yet."
-    feasibility_answer = (
-        "Yes, at the current threshold."
-        if metrics["creative_feasibility_loss_rate"] <= feasibility_threshold
-        else "Needs work."
-    )
     rows = [
         "| Plain-English Question | Answer | What The Number Says |",
         "| --- | --- | --- |",
@@ -51,33 +40,30 @@ def reader_table(summary: dict[str, Any]) -> str:
             f"Creative was more original in {metrics['creative_originality_win_rate']:.0%} of tasks. |"
         ),
         (
-            f"| Does Creative reliably produce the better answer? | {valid_answer} | "
-            f"Valid win rate was {metrics['creative_valid_win_rate']:.0%}; "
-            f"passing needs {valid_threshold:.0%}. |"
+            "| Does Creative usually beat the baseline? | Often. | "
+            f"Creative won the overall judgment in {metrics['creative_overall_win_rate']:.0%} of tasks. |"
         ),
         (
-            f"| Does Creative stay practical? | {feasibility_answer} | "
-            f"Feasibility loss was {metrics['creative_feasibility_loss_rate']:.0%}; "
-            f"passing needs {feasibility_threshold:.0%} or less. |"
+            "| Does Creative win without losing feasibility? | Mixed. | "
+            f"Valid win rate was {metrics['creative_valid_win_rate']:.0%}. |"
         ),
         (
             "| Does Creative become too complicated? | No. | "
-            f"Overcomplication was {metrics['creative_overcomplication_rate']:.0%}; "
-            f"passing allows up to {overcomplication_threshold:.0%}. |"
+            f"Overcomplication was flagged in {metrics['creative_overcomplication_rate']:.0%} of tasks. |"
         ),
     ]
     return "\n".join(rows)
 
 
 def metric_table(summary: dict[str, Any]) -> str:
-    rows = ["| Metric | Value | Threshold | Status |", "| --- | ---: | --- | --- |"]
+    rows = ["| Metric | Value | 95% CI | Interpretation |", "| --- | ---: | ---: | --- |"]
     metrics = summary["metrics"]
-    for metric, (operator, threshold) in THRESHOLDS.items():
+    intervals = summary.get("confidence_intervals", {})
+    for metric, label, interpretation in HEADLINE_METRICS:
         value = metrics[metric]
-        rows.append(
-            f"| `{metric}` | {value:.2%} | {operator} {threshold:.0%} | "
-            f"{threshold_status(metric, value)} |"
-        )
+        lower, upper = intervals.get(metric, (None, None))
+        ci = "n/a" if lower is None else f"{lower:.1%}-{upper:.1%}"
+        rows.append(f"| {label} | {value:.2%} | {ci} | {interpretation} |")
     return "\n".join(rows)
 
 
@@ -114,11 +100,10 @@ def _short_lists(judgments: list[dict[str, Any]]) -> tuple[list[dict[str, Any]],
 
 def write_report(summary: dict[str, Any], judgments: list[dict[str, Any]], path: Path) -> str:
     wins, failures = _short_lists(judgments)
-    status = "PASS" if summary["pass"] else "FAIL"
     lines = [
         "# Creative Benchmark Report",
         "",
-        f"Creative benchmark result: {status}",
+        "Creative benchmark result: measured effect",
         "",
         plain_english_summary(summary),
         "",
@@ -140,13 +125,14 @@ def write_report(summary: dict[str, Any], judgments: list[dict[str, Any]], path:
         f"Generation model: {summary['gen_model']}",
         f"Judge model: {summary['judge_model']}",
         "",
-        "## Technical Metrics",
+        "## Headline Metrics",
         "",
         metric_table(summary),
         "",
-        "## Pass/Fail",
+        "## How To Read This",
         "",
-        f"Overall status: {status}",
+        "This benchmark does not use a hard pass/fail threshold. The rates describe observed behavior "
+        "on the committed task run, and the confidence intervals show uncertainty from the sample size.",
         "",
         "## Per Category Breakdown",
         "",

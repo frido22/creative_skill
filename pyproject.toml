@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "creative_bench"
 version = "0.1.0"
-description = "Installable Creative skill plus an automated benchmark for proving it makes LLM outputs less default while preserving usefulness and feasibility."
+description = "Installable Creative skill plus an automated benchmark for testing whether it makes LLM outputs less default while preserving usefulness and feasibility."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}

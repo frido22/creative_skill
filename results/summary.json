@@ -113,6 +113,37 @@
       "tie_rate": 0.2
     }
   },
+  "confidence_intervals": {
+    "creative_feasibility_loss_rate": [
+      0.2422277353579172,
+      0.529678399454681
+    ],
+    "creative_originality_win_rate": [
+      0.834958291820748,
+      0.9861796228538989
+    ],
+    "creative_overall_win_rate": [
+      0.545696893456796,
+      0.8192532908430471
+    ],
+    "creative_overcomplication_rate": [
+      0.0,
+      0.08762453925039232
+    ],
+    "creative_usefulness_win_rate": [
+      0.08745302996883063,
+      0.3195029205439244
+    ],
+    "creative_valid_win_rate": [
+      0.35199278797099753,
+      0.6480072120290025
+    ],
+    "tie_rate": [
+      0.05459419773541284,
+      0.26112420670238146
+    ]
+  },
+  "confidence_level": 0.95,
   "gen_model": "gpt-5.5",
   "judge_model": "gpt-5.5",
   "metrics": {
@@ -129,24 +160,5 @@
     "creative_valid_win_rate": 0.5,
     "tie_rate": 0.125
   },
-  "pass": true,
-  "task_count": 40,
-  "thresholds": {
-    "creative_feasibility_loss_rate": [
-      "<=",
-      0.5
-    ],
-    "creative_originality_win_rate": [
-      ">=",
-      0.7
-    ],
-    "creative_overcomplication_rate": [
-      "<=",
-      0.5
-    ],
-    "creative_valid_win_rate": [
-      ">=",
-      0.5
-    ]
-  }
+  "task_count": 40
 }

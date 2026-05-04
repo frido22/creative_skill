@@ -4,28 +4,29 @@ Creative is an installable Codex skill that pushes an LLM away from default answ
 
 This repo contains Creative, benchmark code, a default task set, and generated benchmark results.
 
-Current result: Creative passes the current benchmark thresholds. It is much more original than baseline, wins valid comparisons at the pass line, and stays within the current feasibility and overcomplication limits.
+Current result: Creative made answers much more original than baseline and won most overall comparisons. The committed result is a 40-task real run; the default task set has been expanded to 80 prompts for the next larger run.
 
 ## Current real benchmark result
 
 | Plain-English Question | Answer |
 | --- | --- |
 | Does Creative make answers more original? | Yes, strongly. |
-| Does Creative reliably produce the better answer? | Yes, at the current threshold. |
-| Does Creative stay practical? | Yes, at the current threshold. |
+| Does Creative usually beat the baseline? | Often. |
+| Does Creative win without losing feasibility? | Mixed. |
 | Does Creative become too complicated? | No. |
 
-The benchmark result is: **Creative changes answers in the intended direction and passes the current usefulness guardrails, but it is close to the valid-win threshold.**
+The benchmark result is: **Creative changes answers in the intended direction. The strongest evidence is originality; the main caveat is feasibility tradeoff.**
 
 Technical details:
 
 <!-- BENCHMARK_TABLE_START -->
-| Metric | Value | Threshold | Status |
-| --- | ---: | --- | --- |
-| `creative_originality_win_rate` | 95.00% | >= 70% | PASS |
-| `creative_valid_win_rate` | 50.00% | >= 50% | PASS |
-| `creative_feasibility_loss_rate` | 37.50% | <= 50% | PASS |
-| `creative_overcomplication_rate` | 0.00% | <= 50% | PASS |
+| Metric | Value | 95% CI | Interpretation |
+| --- | ---: | ---: | --- |
+| Originality win rate | 95.00% | 83.5%-98.6% | Higher means less default. |
+| Overall win rate | 70.00% | 54.6%-81.9% | Higher means the judge preferred Creative. |
+| Valid win rate | 50.00% | 35.2%-64.8% | Creative won without losing feasibility. |
+| Feasibility loss rate | 37.50% | 24.2%-53.0% | Lower means fewer practicality losses. |
+| Overcomplication rate | 0.00% | 0.0%-8.8% | Lower means fewer bloated answers. |
 <!-- BENCHMARK_TABLE_END -->
 
 ## What is CreativeBench?
@@ -40,7 +41,7 @@ Creative asks the model to reject the first clean answer, generate stronger alte
 
 Prompts that ask for originality can drift into novelty without utility. CreativeBench tests whether Creative produces less default answers while preserving usefulness, feasibility, specificity, and simplicity.
 
-The benchmark is automated. It uses blind pairwise judging. The main metric is `creative_valid_win_rate`. The benchmark punishes weird but useless answers.
+The benchmark is automated. It uses blind pairwise judging. The headline signals are originality win rate, overall win rate, valid win rate, feasibility loss rate, and overcomplication rate. The benchmark punishes weird but useless answers.
 
 CreativeBench is not a replacement for human evaluation, but it is a fast first-pass test.
 
@@ -74,6 +75,7 @@ python -m creative_bench.cli run
 ```
 
 By default the real benchmark uses `gpt-5.5` for both generation and judging with medium reasoning effort.
+It runs API calls in parallel with `MAX_WORKERS=12` by default. Lower this value in `.env` if you hit rate limits.
 
 Real run outputs:
 
@@ -96,7 +98,9 @@ Prompts should describe situations where the obvious/default answer is likely to
 
 ## Interpret metrics
 
-`creative_valid_win_rate` is the main "did Creative really win?" metric. It counts cases where the Creative answer wins overall, is not nonsense, and does not lose feasibility. Higher is better.
+`creative_valid_win_rate` is the strictest "did Creative really win?" metric. It counts cases where the Creative answer wins overall, is not nonsense, and does not lose feasibility. Higher is better.
+
+`creative_overall_win_rate` measures whether the blind judge preferred Creative overall. Higher is better.
 
 `creative_originality_win_rate` measures whether Creative is less default than baseline. Higher is better.
 
@@ -104,7 +108,7 @@ Prompts should describe situations where the obvious/default answer is likely to
 
 `creative_overcomplication_rate` catches answers that become elaborate without earning the complexity. Lower is better.
 
-The report says PASS only if all success thresholds pass. A FAIL can still be useful: it shows exactly what needs tuning.
+The report does not use hard pass/fail thresholds. It reports observed rates and 95% confidence intervals so readers can see the effect size and uncertainty.
 
 ## Repository structure
 
@@ -127,4 +131,4 @@ creative_bench/
 
 ## Limitations
 
-Automated judging can be biased by the judge model. The task set is intentionally small. Results may change across model versions. The benchmark measures a useful signal, not final product quality.
+Automated judging can be biased by the judge model. Results may change across model versions. The current committed run has 40 judged pairs, which gives useful signal but wide confidence intervals. The benchmark measures a useful signal, not final product quality.

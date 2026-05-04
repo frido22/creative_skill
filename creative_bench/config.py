@@ -37,7 +37,7 @@ def load_settings() -> Settings:
         temperature=float(os.getenv("TEMPERATURE", "0.8")),
         seed=int(os.getenv("SEED", "42")),
         reasoning_effort=os.getenv("REASONING_EFFORT", "medium"),
-        max_workers=int(os.getenv("MAX_WORKERS", "6")),
+        max_workers=int(os.getenv("MAX_WORKERS", "12")),
     )
 
 

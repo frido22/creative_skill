@@ -55,8 +55,14 @@ def command_judge() -> None:
 def command_report() -> None:
     settings = load_settings()
     paths = _paths()
-    summary = json.loads(paths["summary"].read_text(encoding="utf-8"))
+    previous_summary = json.loads(paths["summary"].read_text(encoding="utf-8"))
     judgments = read_jsonl(paths["judgments"])
+    summary = compute_summary(
+        judgments,
+        previous_summary.get("gen_model", settings.gen_model),
+        previous_summary.get("judge_model", settings.judge_model),
+    )
+    write_summary(summary, paths["summary"])
     write_report(summary, judgments, paths["report"])
     update_readme(settings.readme_path, summary)
     console.print(f"Wrote {paths['report']}.")
@@ -74,7 +80,7 @@ def command_run() -> None:
     write_summary(summary, paths["summary"])
     write_report(summary, judgments, paths["report"])
     update_readme(settings.readme_path, summary)
-    console.print(f"Benchmark complete: {'PASS' if summary['pass'] else 'FAIL'}")
+    console.print(f"Benchmark complete: {len(judgments)} judgments.")
 
 
 def main() -> None:
