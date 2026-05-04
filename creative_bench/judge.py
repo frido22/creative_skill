@@ -16,15 +16,17 @@ from creative_bench.tasks import Task, write_jsonl
 JUDGE_SYSTEM_PROMPT = """You are judging two answers to the same user request.
 Do not reward length.
 Do not reward weirdness alone.
+Do not infer which answer used a special prompt or skill.
 Prefer the answer that is more useful, original, feasible, specific, and simple.
 Score each answer from 1 to 5 on:
-1. originality
-2. usefulness
-3. feasibility
-4. specificity
-5. simplicity
+1. originality: avoids generic/default answers and offers a non-obvious angle.
+2. usefulness: helps the user make progress on the actual request.
+3. feasibility: could realistically work without hidden assumptions.
+4. specificity: gives concrete details, tradeoffs, or next actions.
+5. simplicity: avoids unnecessary complexity, ceremony, or bloat.
 Then choose:
 overall_winner: A, B, or tie
+Choose tie only when neither answer is meaningfully better overall.
 Also return:
 nonsense_a: true or false
 nonsense_b: true or false
