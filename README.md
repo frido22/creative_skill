@@ -4,7 +4,7 @@ Creative is an installable Codex skill that pushes an LLM away from default answ
 
 This repo contains Creative, benchmark code, a default task set, and generated benchmark results.
 
-Current result: Creative made answers much more original than baseline and won most overall comparisons. The committed result is a 40-task real run; the default task set has been expanded to 80 prompts for the next larger run.
+Current result: Creative made answers much more original than baseline and won most overall comparisons in the committed 40-task real run. The default task set now has 80 prompts; rerun the benchmark to refresh results for the current skill and larger task set.
 
 ## Current real benchmark result
 
@@ -131,4 +131,4 @@ creative_bench/
 
 ## Limitations
 
-Automated judging can be biased by the judge model. Results may change across model versions. The current committed run has 40 judged pairs, which gives useful signal but wide confidence intervals. The benchmark measures a useful signal, not final product quality.
+Automated judging can be biased by the judge model. Results may change across model versions. The current committed result has 40 judged pairs, while the default task set now contains 80 prompts for the next run. The benchmark measures a useful signal, not final product quality.
