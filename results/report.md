@@ -27,6 +27,7 @@ The judge uses five plain-English questions, then chooses the better answer over
 
 | Judge Question | What It Measures |
 | --- | --- |
+| Which answer was better overall? | Overall judgment |
 | Which answer is less default and brings a better non-obvious angle? | Originality |
 | Which answer gives the user a better next move? | Usefulness |
 | Which answer is more realistic to execute as written? | Feasibility |
@@ -37,15 +38,18 @@ Tasks: 80
 Generation model: gpt-5.5
 Judge model: gpt-5.5
 
-## Headline Metrics
+## Benchmark Questions
 
-| Metric | Value | 95% CI | Interpretation |
-| --- | ---: | ---: | --- |
-| Originality win rate | 87.50% | 78.5%-93.1% | Higher means less default. |
-| Overall win rate | 78.75% | 68.6%-86.3% | Higher means the judge preferred Creative. |
-| Valid win rate | 52.50% | 41.7%-63.1% | Creative won without losing feasibility. |
-| Feasibility loss rate | 40.00% | 30.0%-51.0% | Lower means fewer practicality losses. |
-| Overcomplication rate | 2.50% | 0.7%-8.7% | Lower means fewer bloated answers. |
+This table shows how often Creative won overall and how often it won each judge question.
+
+| Judge Question | What It Measures | Creative Won | 95% CI |
+| --- | --- | ---: | ---: |
+| Which answer was better overall? | Overall judgment | 78.75% | 68.6%-86.3% |
+| Which answer is less default and brings a better non-obvious angle? | Originality | 87.50% | 78.5%-93.1% |
+| Which answer gives the user a better next move? | Usefulness | 42.50% | 32.3%-53.4% |
+| Which answer is more realistic to execute as written? | Feasibility | 12.50% | 6.9%-21.5% |
+| Which answer gives more concrete details, tradeoffs, or next actions? | Specificity | 38.75% | 28.8%-49.7% |
+| Which answer avoids unnecessary complexity, ceremony, or bloat? | Simplicity | 33.75% | 24.3%-44.6% |
 
 ## How To Read This
 

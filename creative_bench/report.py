@@ -8,20 +8,33 @@ from typing import Any
 README_START = "<!-- BENCHMARK_TABLE_START -->"
 README_END = "<!-- BENCHMARK_TABLE_END -->"
 
-HEADLINE_METRICS = [
-    ("creative_originality_win_rate", "Originality win rate", "Higher means less default."),
-    ("creative_overall_win_rate", "Overall win rate", "Higher means the judge preferred Creative."),
-    ("creative_valid_win_rate", "Valid win rate", "Creative won without losing feasibility."),
-    ("creative_feasibility_loss_rate", "Feasibility loss rate", "Lower means fewer practicality losses."),
-    ("creative_overcomplication_rate", "Overcomplication rate", "Lower means fewer bloated answers."),
-]
-
 JUDGE_QUESTIONS = [
-    ("Originality", "Which answer is less default and brings a better non-obvious angle?"),
-    ("Usefulness", "Which answer gives the user a better next move?"),
-    ("Feasibility", "Which answer is more realistic to execute as written?"),
-    ("Specificity", "Which answer gives more concrete details, tradeoffs, or next actions?"),
-    ("Simplicity", "Which answer avoids unnecessary complexity, ceremony, or bloat?"),
+    (
+        "creative_overall_win_rate",
+        "Which answer was better overall?",
+        "Overall judgment",
+    ),
+    (
+        "creative_originality_win_rate",
+        "Which answer is less default and brings a better non-obvious angle?",
+        "Originality",
+    ),
+    ("creative_usefulness_win_rate", "Which answer gives the user a better next move?", "Usefulness"),
+    (
+        "creative_feasibility_win_rate",
+        "Which answer is more realistic to execute as written?",
+        "Feasibility",
+    ),
+    (
+        "creative_specificity_win_rate",
+        "Which answer gives more concrete details, tradeoffs, or next actions?",
+        "Specificity",
+    ),
+    (
+        "creative_simplicity_win_rate",
+        "Which answer avoids unnecessary complexity, ceremony, or bloat?",
+        "Simplicity",
+    ),
 ]
 
 
@@ -64,20 +77,23 @@ def reader_table(summary: dict[str, Any]) -> str:
 
 
 def metric_table(summary: dict[str, Any]) -> str:
-    rows = ["| Metric | Value | 95% CI | Interpretation |", "| --- | ---: | ---: | --- |"]
+    rows = [
+        "| Judge Question | What It Measures | Creative Won | 95% CI |",
+        "| --- | --- | ---: | ---: |",
+    ]
     metrics = summary["metrics"]
     intervals = summary.get("confidence_intervals", {})
-    for metric, label, interpretation in HEADLINE_METRICS:
+    for metric, question, label in JUDGE_QUESTIONS:
         value = metrics[metric]
         lower, upper = intervals.get(metric, (None, None))
         ci = "n/a" if lower is None else f"{lower:.1%}-{upper:.1%}"
-        rows.append(f"| {label} | {value:.2%} | {ci} | {interpretation} |")
+        rows.append(f"| {question} | {label} | {value:.2%} | {ci} |")
     return "\n".join(rows)
 
 
 def judge_questions_table() -> str:
     rows = ["| Judge Question | What It Measures |", "| --- | --- |"]
-    rows.extend(f"| {question} | {metric} |" for metric, question in JUDGE_QUESTIONS)
+    rows.extend(f"| {question} | {label} |" for _, question, label in JUDGE_QUESTIONS)
     return "\n".join(rows)
 
 
@@ -145,7 +161,9 @@ def write_report(summary: dict[str, Any], judgments: list[dict[str, Any]], path:
         f"Generation model: {summary['gen_model']}",
         f"Judge model: {summary['judge_model']}",
         "",
-        "## Headline Metrics",
+        "## Benchmark Questions",
+        "",
+        "This table shows how often Creative won overall and how often it won each judge question.",
         "",
         metric_table(summary),
         "",

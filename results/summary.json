@@ -7,9 +7,12 @@
       "average_specificity_delta": 0.3,
       "average_usefulness_delta": 0.3,
       "creative_feasibility_loss_rate": 0.4,
+      "creative_feasibility_win_rate": 0.0,
       "creative_originality_win_rate": 0.9,
       "creative_overall_win_rate": 0.9,
       "creative_overcomplication_rate": 0.0,
+      "creative_simplicity_win_rate": 0.3,
+      "creative_specificity_win_rate": 0.4,
       "creative_usefulness_win_rate": 0.4,
       "creative_valid_win_rate": 0.5,
       "tie_rate": 0.0
@@ -21,9 +24,12 @@
       "average_specificity_delta": 0.3,
       "average_usefulness_delta": 0.3,
       "creative_feasibility_loss_rate": 0.4,
+      "creative_feasibility_win_rate": 0.3,
       "creative_originality_win_rate": 0.9,
       "creative_overall_win_rate": 0.7,
       "creative_overcomplication_rate": 0.1,
+      "creative_simplicity_win_rate": 0.3,
+      "creative_specificity_win_rate": 0.5,
       "creative_usefulness_win_rate": 0.5,
       "creative_valid_win_rate": 0.6,
       "tie_rate": 0.0
@@ -35,9 +41,12 @@
       "average_specificity_delta": -0.1,
       "average_usefulness_delta": 0.1,
       "creative_feasibility_loss_rate": 0.4,
+      "creative_feasibility_win_rate": 0.0,
       "creative_originality_win_rate": 0.9,
       "creative_overall_win_rate": 0.8,
       "creative_overcomplication_rate": 0.0,
+      "creative_simplicity_win_rate": 0.6,
+      "creative_specificity_win_rate": 0.1,
       "creative_usefulness_win_rate": 0.3,
       "creative_valid_win_rate": 0.5,
       "tie_rate": 0.1
@@ -49,9 +58,12 @@
       "average_specificity_delta": 0.1,
       "average_usefulness_delta": 0.6,
       "creative_feasibility_loss_rate": 0.5,
+      "creative_feasibility_win_rate": 0.2,
       "creative_originality_win_rate": 0.9,
       "creative_overall_win_rate": 0.9,
       "creative_overcomplication_rate": 0.0,
+      "creative_simplicity_win_rate": 0.4,
+      "creative_specificity_win_rate": 0.4,
       "creative_usefulness_win_rate": 0.7,
       "creative_valid_win_rate": 0.5,
       "tie_rate": 0.0
@@ -63,9 +75,12 @@
       "average_specificity_delta": 0.4,
       "average_usefulness_delta": 0.3,
       "creative_feasibility_loss_rate": 0.3,
+      "creative_feasibility_win_rate": 0.1,
       "creative_originality_win_rate": 0.9,
       "creative_overall_win_rate": 0.8,
       "creative_overcomplication_rate": 0.0,
+      "creative_simplicity_win_rate": 0.2,
+      "creative_specificity_win_rate": 0.5,
       "creative_usefulness_win_rate": 0.5,
       "creative_valid_win_rate": 0.6,
       "tie_rate": 0.0
@@ -77,9 +92,12 @@
       "average_specificity_delta": 0.3,
       "average_usefulness_delta": 0.1,
       "creative_feasibility_loss_rate": 0.6,
+      "creative_feasibility_win_rate": 0.1,
       "creative_originality_win_rate": 0.9,
       "creative_overall_win_rate": 0.8,
       "creative_overcomplication_rate": 0.0,
+      "creative_simplicity_win_rate": 0.4,
+      "creative_specificity_win_rate": 0.5,
       "creative_usefulness_win_rate": 0.3,
       "creative_valid_win_rate": 0.4,
       "tie_rate": 0.0
@@ -91,9 +109,12 @@
       "average_specificity_delta": -0.1,
       "average_usefulness_delta": 0.1,
       "creative_feasibility_loss_rate": 0.3,
+      "creative_feasibility_win_rate": 0.1,
       "creative_originality_win_rate": 0.9,
       "creative_overall_win_rate": 0.9,
       "creative_overcomplication_rate": 0.0,
+      "creative_simplicity_win_rate": 0.4,
+      "creative_specificity_win_rate": 0.3,
       "creative_usefulness_win_rate": 0.3,
       "creative_valid_win_rate": 0.7,
       "tie_rate": 0.0
@@ -105,9 +126,12 @@
       "average_specificity_delta": 0.0,
       "average_usefulness_delta": -0.1,
       "creative_feasibility_loss_rate": 0.3,
+      "creative_feasibility_win_rate": 0.2,
       "creative_originality_win_rate": 0.7,
       "creative_overall_win_rate": 0.5,
       "creative_overcomplication_rate": 0.1,
+      "creative_simplicity_win_rate": 0.1,
+      "creative_specificity_win_rate": 0.4,
       "creative_usefulness_win_rate": 0.4,
       "creative_valid_win_rate": 0.4,
       "tie_rate": 0.0
@@ -117,6 +141,10 @@
     "creative_feasibility_loss_rate": [
       0.299616592734415,
       0.5095473545185001
+    ],
+    "creative_feasibility_win_rate": [
+      0.06933483036777514,
+      0.2150299718306562
     ],
     "creative_originality_win_rate": [
       0.7849700281693438,
@@ -129,6 +157,14 @@
     "creative_overcomplication_rate": [
       0.006882748898125228,
       0.08664600055322111
+    ],
+    "creative_simplicity_win_rate": [
+      0.24345459812221978,
+      0.44643681616376707
+    ],
+    "creative_specificity_win_rate": [
+      0.2882439968827771,
+      0.4970654437767524
     ],
     "creative_usefulness_win_rate": [
       0.32256388014807325,
@@ -153,9 +189,12 @@
     "average_specificity_delta": 0.15,
     "average_usefulness_delta": 0.2125,
     "creative_feasibility_loss_rate": 0.4,
+    "creative_feasibility_win_rate": 0.125,
     "creative_originality_win_rate": 0.875,
     "creative_overall_win_rate": 0.7875,
     "creative_overcomplication_rate": 0.025,
+    "creative_simplicity_win_rate": 0.3375,
+    "creative_specificity_win_rate": 0.3875,
     "creative_usefulness_win_rate": 0.425,
     "creative_valid_win_rate": 0.525,
     "tie_rate": 0.0125

@@ -10,6 +10,9 @@ RATE_METRICS = [
     "creative_valid_win_rate",
     "creative_overall_win_rate",
     "creative_usefulness_win_rate",
+    "creative_feasibility_win_rate",
+    "creative_specificity_win_rate",
+    "creative_simplicity_win_rate",
     "creative_feasibility_loss_rate",
     "creative_overcomplication_rate",
     "tie_rate",
@@ -63,6 +66,15 @@ def _compute_rows(rows: list[dict[str, Any]]) -> dict[str, float]:
         counts["creative_usefulness_win"] += int(
             _score(row, creative_side, "usefulness") > _score(row, baseline_side, "usefulness")
         )
+        counts["creative_feasibility_win"] += int(
+            _score(row, creative_side, "feasibility") > _score(row, baseline_side, "feasibility")
+        )
+        counts["creative_specificity_win"] += int(
+            _score(row, creative_side, "specificity") > _score(row, baseline_side, "specificity")
+        )
+        counts["creative_simplicity_win"] += int(
+            _score(row, creative_side, "simplicity") > _score(row, baseline_side, "simplicity")
+        )
         counts["creative_feasibility_loss"] += int(feasibility_loss)
         counts["creative_overcomplication"] += int(overcomplicated)
         counts["tie"] += int(row["overall_winner"] == "tie")
@@ -75,6 +87,9 @@ def _compute_rows(rows: list[dict[str, Any]]) -> dict[str, float]:
         "creative_overall_win_rate": _rate(counts["creative_overall_win"], total),
         "creative_originality_win_rate": _rate(counts["creative_originality_win"], total),
         "creative_usefulness_win_rate": _rate(counts["creative_usefulness_win"], total),
+        "creative_feasibility_win_rate": _rate(counts["creative_feasibility_win"], total),
+        "creative_specificity_win_rate": _rate(counts["creative_specificity_win"], total),
+        "creative_simplicity_win_rate": _rate(counts["creative_simplicity_win"], total),
         "creative_feasibility_loss_rate": _rate(counts["creative_feasibility_loss"], total),
         "creative_overcomplication_rate": _rate(counts["creative_overcomplication"], total),
         "tie_rate": _rate(counts["tie"], total),
