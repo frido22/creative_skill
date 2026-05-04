@@ -12,7 +12,7 @@ Refuse the first clean answer.
 5. Ship the strongest version.
 Rules:
 - Weird is welcome.
-- Boring is failure.
+- Default is failure.
 - Beauty counts.
 - The final idea must still work.
 - Do not add complexity just to look creative.
