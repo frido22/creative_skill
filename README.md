@@ -4,7 +4,7 @@ Creative is an installable Codex skill that pushes an LLM away from default answ
 
 This repo contains Creative, benchmark code, a default task set, and generated benchmark results.
 
-Current result: Creative made answers much more original than baseline and won most overall comparisons in the committed 40-task real run. The default task set now has 80 prompts; rerun the benchmark to refresh results for the current skill and larger task set.
+Current result: Creative made answers much more original than baseline and won most overall comparisons in the committed 80-task real run.
 
 ## Current real benchmark result
 
@@ -22,11 +22,11 @@ Technical details:
 <!-- BENCHMARK_TABLE_START -->
 | Metric | Value | 95% CI | Interpretation |
 | --- | ---: | ---: | --- |
-| Originality win rate | 95.00% | 83.5%-98.6% | Higher means less default. |
-| Overall win rate | 70.00% | 54.6%-81.9% | Higher means the judge preferred Creative. |
-| Valid win rate | 50.00% | 35.2%-64.8% | Creative won without losing feasibility. |
-| Feasibility loss rate | 37.50% | 24.2%-53.0% | Lower means fewer practicality losses. |
-| Overcomplication rate | 0.00% | 0.0%-8.8% | Lower means fewer bloated answers. |
+| Originality win rate | 87.50% | 78.5%-93.1% | Higher means less default. |
+| Overall win rate | 78.75% | 68.6%-86.3% | Higher means the judge preferred Creative. |
+| Valid win rate | 52.50% | 41.7%-63.1% | Creative won without losing feasibility. |
+| Feasibility loss rate | 40.00% | 30.0%-51.0% | Lower means fewer practicality losses. |
+| Overcomplication rate | 2.50% | 0.7%-8.7% | Lower means fewer bloated answers. |
 <!-- BENCHMARK_TABLE_END -->
 
 ## What is CreativeBench?
@@ -146,4 +146,4 @@ creative_bench/
 
 ## Limitations
 
-Automated judging can be biased by the judge model. Results may change across model versions. The current committed result has 40 judged pairs, while the default task set now contains 80 prompts for the next run. The benchmark measures a useful signal, not final product quality.
+Automated judging can be biased by the judge model. Results may change across model versions. The current committed result has 80 judged pairs, which gives a useful signal but still has uncertainty. The benchmark measures a useful signal, not final product quality.
