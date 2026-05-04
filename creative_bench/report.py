@@ -18,8 +18,8 @@ HEADLINE_METRICS = [
 
 JUDGE_QUESTIONS = [
     ("Originality", "Which answer is less default and brings a better non-obvious angle?"),
-    ("Usefulness", "Which answer helps the user make more progress on the actual request?"),
-    ("Feasibility", "Which answer could more realistically work without hidden assumptions?"),
+    ("Usefulness", "Which answer gives the user a better next move?"),
+    ("Feasibility", "Which answer is more realistic to execute as written?"),
     ("Specificity", "Which answer gives more concrete details, tradeoffs, or next actions?"),
     ("Simplicity", "Which answer avoids unnecessary complexity, ceremony, or bloat?"),
 ]

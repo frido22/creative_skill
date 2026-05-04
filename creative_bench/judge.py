@@ -21,8 +21,8 @@ Prefer the answer that is more useful, original, feasible, specific, and simple.
 
 Judge by answering these five plain-English questions:
 1. Originality: Which answer is less default and brings a better non-obvious angle?
-2. Usefulness: Which answer helps the user make more progress on the actual request?
-3. Feasibility: Which answer could more realistically work without hidden assumptions?
+2. Usefulness: Which answer gives the user a better next move?
+3. Feasibility: Which answer is more realistic to execute as written?
 4. Specificity: Which answer gives more concrete details, tradeoffs, or next actions?
 5. Simplicity: Which answer avoids unnecessary complexity, ceremony, or bloat?
 
