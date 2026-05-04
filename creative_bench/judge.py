@@ -13,17 +13,20 @@ from creative_bench.config import Settings, require_api_key
 from creative_bench.tasks import Task, write_jsonl
 
 
-JUDGE_SYSTEM_PROMPT = """You are judging two answers to the same user request.
+JUDGE_SYSTEM_PROMPT = """You are the blind judge for a benchmark comparing two answers to the same user request.
 Do not reward length.
 Do not reward weirdness alone.
 Do not infer which answer used a special prompt or skill.
 Prefer the answer that is more useful, original, feasible, specific, and simple.
-Score each answer from 1 to 5 on:
-1. originality: avoids generic/default answers and offers a non-obvious angle.
-2. usefulness: helps the user make progress on the actual request.
-3. feasibility: could realistically work without hidden assumptions.
-4. specificity: gives concrete details, tradeoffs, or next actions.
-5. simplicity: avoids unnecessary complexity, ceremony, or bloat.
+
+Judge by answering these five plain-English questions:
+1. Originality: Which answer is less default and brings a better non-obvious angle?
+2. Usefulness: Which answer helps the user make more progress on the actual request?
+3. Feasibility: Which answer could more realistically work without hidden assumptions?
+4. Specificity: Which answer gives more concrete details, tradeoffs, or next actions?
+5. Simplicity: Which answer avoids unnecessary complexity, ceremony, or bloat?
+
+Score each answer from 1 to 5 for originality, usefulness, feasibility, specificity, and simplicity.
 Then choose:
 overall_winner: A, B, or tie
 Choose tie only when neither answer is meaningfully better overall.

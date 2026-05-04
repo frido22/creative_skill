@@ -21,6 +21,18 @@ Short version: this benchmark does not ask whether Creative is weird. It asks wh
 
 The benchmark generates baseline and creative answers for each task, randomizes answer order, and asks an automated judge to compare the pair without seeing labels.
 
+## Judge Questions
+
+The judge uses five plain-English questions, then chooses the better answer overall.
+
+| Judge Question | What It Measures |
+| --- | --- |
+| Which answer is less default and brings a better non-obvious angle? | Originality |
+| Which answer helps the user make more progress on the actual request? | Usefulness |
+| Which answer could more realistically work without hidden assumptions? | Feasibility |
+| Which answer gives more concrete details, tradeoffs, or next actions? | Specificity |
+| Which answer avoids unnecessary complexity, ceremony, or bloat? | Simplicity |
+
 Tasks: 40
 Generation model: gpt-5.5
 Judge model: gpt-5.5

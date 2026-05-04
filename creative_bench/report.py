@@ -16,6 +16,14 @@ HEADLINE_METRICS = [
     ("creative_overcomplication_rate", "Overcomplication rate", "Lower means fewer bloated answers."),
 ]
 
+JUDGE_QUESTIONS = [
+    ("Originality", "Which answer is less default and brings a better non-obvious angle?"),
+    ("Usefulness", "Which answer helps the user make more progress on the actual request?"),
+    ("Feasibility", "Which answer could more realistically work without hidden assumptions?"),
+    ("Specificity", "Which answer gives more concrete details, tradeoffs, or next actions?"),
+    ("Simplicity", "Which answer avoids unnecessary complexity, ceremony, or bloat?"),
+]
+
 
 def plain_english_summary(summary: dict[str, Any]) -> str:
     metrics = summary["metrics"]
@@ -64,6 +72,12 @@ def metric_table(summary: dict[str, Any]) -> str:
         lower, upper = intervals.get(metric, (None, None))
         ci = "n/a" if lower is None else f"{lower:.1%}-{upper:.1%}"
         rows.append(f"| {label} | {value:.2%} | {ci} | {interpretation} |")
+    return "\n".join(rows)
+
+
+def judge_questions_table() -> str:
+    rows = ["| Judge Question | What It Measures |", "| --- | --- |"]
+    rows.extend(f"| {question} | {metric} |" for metric, question in JUDGE_QUESTIONS)
     return "\n".join(rows)
 
 
@@ -120,6 +134,12 @@ def write_report(summary: dict[str, Any], judgments: list[dict[str, Any]], path:
         "",
         "The benchmark generates baseline and creative answers for each task, randomizes answer "
         "order, and asks an automated judge to compare the pair without seeing labels.",
+        "",
+        "## Judge Questions",
+        "",
+        "The judge uses five plain-English questions, then chooses the better answer overall.",
+        "",
+        judge_questions_table(),
         "",
         f"Tasks: {summary['task_count']}",
         f"Generation model: {summary['gen_model']}",

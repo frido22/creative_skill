@@ -54,6 +54,18 @@ For each task, CreativeBench generates two answers:
 
 It randomizes whether the baseline or creative answer appears as answer A. The judge does not see the labels. The judge scores originality, usefulness, feasibility, specificity, and simplicity, then chooses an overall winner or tie.
 
+The judge uses five plain-English questions:
+
+| Judge Question | What It Measures |
+| --- | --- |
+| Which answer is less default and brings a better non-obvious angle? | Originality |
+| Which answer helps the user make more progress on the actual request? | Usefulness |
+| Which answer could more realistically work without hidden assumptions? | Feasibility |
+| Which answer gives more concrete details, tradeoffs, or next actions? | Specificity |
+| Which answer avoids unnecessary complexity, ceremony, or bloat? | Simplicity |
+
+The public result is the Markdown report. JSON and JSONL files are kept as machine-readable evidence so the benchmark can be reproduced.
+
 ## Install
 
 ```bash
@@ -77,14 +89,17 @@ python -m creative_bench.cli run
 By default the real benchmark uses `gpt-5.5` for both generation and judging with medium reasoning effort.
 It runs API calls in parallel with `MAX_WORKERS=12` by default. Lower this value in `.env` if you hit rate limits.
 
-Real run outputs:
+Human-facing output:
+
+- `results/report.md`
+
+Machine-readable outputs:
 
 - `results/baseline.jsonl`
 - `results/creative.jsonl`
 - `results/pairs.jsonl`
 - `results/judgments.jsonl`
 - `results/summary.json`
-- `results/report.md`
 
 ## Add new tasks
 

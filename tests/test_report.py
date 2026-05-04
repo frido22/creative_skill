@@ -8,5 +8,6 @@ def test_report_command_uses_existing_results() -> None:
     assert "# Creative Benchmark Report" in report
     assert "95% CI" in report
     assert "pass/fail threshold" in report
+    assert "## Judge Questions" in report
     assert "## Per Category Breakdown" in report
     assert "## Top 5 Creative Wins" in report
